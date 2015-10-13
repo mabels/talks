@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>container ship</title>
+
+		<meta name="description" content="Working with Containers">
+		<meta name="author" content="Meno Abels">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>lashing container</h1>
+					<p>
+						<small>powered by <a href="http://github.com/mabels/talks">meno@abels.name</a> / <a href="http://twitter.com/fastandfearless">@fastandfearless</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h2>about me</h2>
+					<ul>
+            <li>i’m a software developer</li>
+            <li>i’m an admin</li>
+            <li>i’m a dev’op</li>
+					</ul>
+				</section>
+
+				<!-- Example of nested vertical slides -->
+				<section>
+						<h2>Wild wilderness</h2>
+					  <p>
+Programm1: echo “Es ist $(zeit2text)” -> output “Es ist vormittag”
+Programm2: echo “It is $(zeit2text)”  -> output “It is vormittag”
+Programm1: braucht zeit2text in deutsch
+Programm2: braucht zeit2text in english
+Collision: Loesung wir brauchen zweit zeit2text versionen. Und gleichzeitig muessen wir Programm1/2 parametrisieren um das richtige zeit2text programm auszuwaehlen.
+Die Loesung ist schwierig/unloesbar je mehr abhaengigkeiten im spiel sind!
+						</p>
+				</section>
+
+				<section>
+					<h2>One Hack to fix the wilderness</h2>
+				      <p>
+								Zwei getrennte Verzeichnis:
+		deutsch/ {programm,zeit2text}
+		english/ {programm,zeit2text}
+		konsequet weiter gedacht:
+		betriebsystem + deutsch-app => deutsch
+		betriebsystem + english+app => english
+		Ergebniss: sowas nennen wir heute Container, vor 15 jahren ging das nicht,
+		platten zu klein und zu langsam. da ein betriebsystem ca 1GB ca. 0.5% der
+		durchschnittlichen Festplattengroesse. Heute sind es nur 0,0005%.
+		Ausserdem dauert das kopieren 100sec heute nur noch 8sec.
+              </p>
+				</section>
+
+				<section>
+					<h2>bare-metal</h2>
+
+				</section>
+
+				<section>
+					<h2>virtual-machine</h2>
+
+				</section>
+
+
+				<section>
+					<h2>chroot/cgroup</h2>
+
+				</section>
+
+				<section>
+					<h2>vergleich der system</h2>
+
+				</section>
+
+				<section>
+					<h2>gleiche struktur</h2>
+					was ist docker oder rkt
+					managment fuer die vorgearbeiten filesysteme
+					unionfs demo, zfs demo
+					
+
+
+				</section>
+
+
+				</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'zoom', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+      Reveal.addEventListener( 'customevent', function() {
+          console.log( '"customevent" has fired' );
+      } );
+
+		</script>
+
+	</body>
+</html>
