@@ -6,7 +6,7 @@
 
 		<title>container ship</title>
 
-		<meta name="description" content="Working with Containers">
+		<meta name="description" content="lashing containers">
 		<meta name="author" content="Meno Abels">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -15,10 +15,21 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/night.css" id="theme">
+		<link rel="stylesheet" href="css/theme/moon.css" id="theme">
 
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<style>
+		.reveal h1,
+		.reveal h2,
+		.reveal h3,
+		.reveal h4,
+		.reveal h5,
+		.reveal h6 {
+		  text-transform: lowercase;
+		}
+		</style>
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -40,66 +51,247 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section>
+				<section data-background="#000000">
 					<h1>lashing container</h1>
 					<p>
 						<small>powered by <a href="http://github.com/mabels/talks">meno@abels.name</a> / <a href="http://twitter.com/fastandfearless">@fastandfearless</a></small>
 					</p>
 				</section>
 
-				<section>
+				<section data-background="#003377" data-background-transition="zoom">
 					<h2>about me</h2>
 					<ul>
             <li>i’m a software developer</li>
             <li>i’m an admin</li>
-            <li>i’m a dev’op</li>
+            <li>i’m a devop</li>
 					</ul>
 				</section>
 
 				<!-- Example of nested vertical slides -->
-				<section>
-						<h2>Wild wilderness</h2>
-					  <p>
-Programm1: echo “Es ist $(zeit2text)” -> output “Es ist vormittag”
-Programm2: echo “It is $(zeit2text)”  -> output “It is vormittag”
-Programm1: braucht zeit2text in deutsch
-Programm2: braucht zeit2text in english
-Collision: Loesung wir brauchen zweit zeit2text versionen. Und gleichzeitig muessen wir Programm1/2 parametrisieren um das richtige zeit2text programm auszuwaehlen.
-Die Loesung ist schwierig/unloesbar je mehr abhaengigkeiten im spiel sind!
+				<section data-background="#770033">
+						<h2>is real world ugly?</h2>
+					  <span class="fragment">
+							<h3>programm (de-version)</h3>
+							<pre>
+							<code class="bash" data-trim contenteditable>
+#/bin/sh
+# Implemetierung der Deutsch gesprochen Raumzeit
+echo “Es ist $(zeit2text)”
+							</code>
+							<code class="bash" data-trim contenteditable>
+# ./programm
+Es ist vormittag
+</code>
+						</pre>
+						</span>
+					</section>
+					<section data-background="#770033" data-background-transition="slide">
+							<h2>is real world ugly?</h2>
+							<h3>programm (en-version)</h3>
+							<pre>
+							<code class="bash" data-trim contenteditable>
+#/bin/sh
+# Implemetion of the english spoken space time
+echo “It is $(zeit2text)”
+							</code>
+							<code class="bash" data-trim contenteditable>
+# ./programm
+It is <b>vormittag</b>
+						</code>
+						</pre>
 						</p>
 				</section>
 
-				<section>
-					<h2>One Hack to fix the wilderness</h2>
-				      <p>
-								Zwei getrennte Verzeichnis:
-		deutsch/ {programm,zeit2text}
-		english/ {programm,zeit2text}
-		konsequet weiter gedacht:
-		betriebsystem + deutsch-app => deutsch
-		betriebsystem + english+app => english
-		Ergebniss: sowas nennen wir heute Container, vor 15 jahren ging das nicht,
-		platten zu klein und zu langsam. da ein betriebsystem ca 1GB ca. 0.5% der
-		durchschnittlichen Festplattengroesse. Heute sind es nur 0,0005%.
-		Ausserdem dauert das kopieren 100sec heute nur noch 8sec.
-              </p>
+				<section data-background="#990033" data-background-transition="fade">
+						<h2>it might be a ugly place?</h2>
+						<span class="fragment">
+							<h3>How to solve this?</h3>
+						</span>
+						<span class="fragment">
+							We need two implementations of "zeit2text" and "program".
+						</span>
+						<span class="fragment">
+							<h3>What has to changed in programms?</h3>
+						</span>
+						<span class="fragment">
+							All programms must be changed so solve this. But is there any chance
+							to solve it without a interface change?<br>
+							<small>Means the programm name stay stable and remains in the same
+							folder no parameters added or enviromentvars are used.</small>
+						</span>
+						<span class="fragment">
+							<h2>Welcome in my world! The Hell!</h2>
+						</span>
+			</section>
+
+				<section data-background="#3333aa" data-background-transition="fade">
+					<h2>Replicate the World</h2>
+						<span class="fragment">
+							<h4>what if we have more than one / ?</h4>
+						</span>
+						<span class="fragment">
+							this is a easy solution if we are able to lead our
+							user to the english or deutsch named /. Yes we still
+							need to implementations but the interface is stable.
+						</span>
+						<span class="fragment">
+							<h4>these named / we call container!</h4>
+						<span>
 				</section>
 
-				<section>
+				<section data-background="#4411aa" data-background-transition="fade">
+					<h2>Why containers today?</h2>
+						<span class="fragment">
+							To run one /(container) you need two seperated
+							systems.
+						</span>
+						<span class="fragment">
+							<table>
+								<thead>
+									<tr>
+										<th>cost of</th>
+										<th>in past</th>
+										<th>today</th>
+									</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>hardware</td>
+									<td>$$$$(200Gb)</td>
+									<td>$$$$(4000Gb)/containers</td>
+								</tr>
+								<tr>
+									<td>os-license</td>
+									<td>$$$$</td>
+									<td>0</td>
+								</tr>
+								<tr>
+									<td>app-license</td>
+									<td>$$$$</td>
+									<td>$$$$ per core</td>
+								</tr>
+								<tr>
+									<td>operation</td>
+									<td>$$$$</td>
+									<td>same with higher systemcount</td>
+								</tr>
+								<tr>
+									<td>time</td>
+									<td>10Mb/s</td>
+									<td>150Mb/s</td>
+								</tr>
+							</tbody>
+						</table>
+						</span>
+
+				</section>
+
+				<section data-background="#223322" data-background-transition="zoom">
+					<h2>running containers</h2>
+					there are different styles of containers.
+					<span class="fragment">
+						<h3>choosing the right</h3>
+						<ul>
+							<li>cost</li>
+							<li>security</li>
+							<li>performance cpu/ram/disk/container</li>
+							<li>isolation/resouce-sharing</li>
+							<li>handling-during runtime</li>
+							<li>migration system-system</li>
+						</ul>
+					</span>
+
+				</section>
+
+				<section data-background="#226622" data-background-transition="concave">
 					<h2>bare-metal</h2>
-
+					<table>
+						<tr>
+							<td>cost</td>
+							<td>----</td>
+						</tr>
+						<tr>
+							<td>security</td>
+							<td>++++</td>
+						</tr>
+						<tr>
+							<td>performance cpu/ram/disk/container</td>
+							<td>++++/++++/+++/++++</td>
+						</tr>
+						<tr>
+							<td>isolation/resouce-sharing</td>
+							<td>++++/NAN</td>
+						</tr>
+						<tr>
+							<td>handling-during runtime</td>
+							<td>----(biosupdate)</td>
+						</tr>
+						<tr>
+							<td>migration system-system</td>
+							<td>----(hardware-drivers)</td>
+						</tr>
+					</table>
 				</section>
 
-				<section>
+
+				<section data-background="#662222" data-background-transition="concave">
 					<h2>virtual-machine</h2>
-
+					<table>
+						<tr>
+							<td>cost</td>
+							<td>++(fix/cpu/ram/disk)<td>
+						</tr>
+						<tr>
+							<td>security</td>
+							<td>+++(mother-total-access(ec2))</td>
+						</tr>
+						<tr>
+							<td>performance cpu/ram/disk/container</td>
+							<td>+++/++++/+++/+++(2xOS)</td>
+						</tr>
+						<tr>
+							<td>isolation/resouce-sharing</td>
+							<td>+++(different os)/---</td>
+						</tr>
+						<tr>
+							<td>handling-during runtime</td>
+							<td>---(no external)</td>
+						</tr>
+						<tr>
+							<td>migration system-system</td>
+							<td>++(size)</td>
+						</tr>
+					</table>
 				</section>
 
-
-				<section>
+				<section data-background="#666622" data-background-transition="concave">
 					<h2>chroot/cgroup</h2>
-
-				</section>
+					<table>
+						<tr>
+							<td>cost</td>
+							<td>++++<td>
+						</tr>
+						<tr>
+							<td>security</td>
+							<td>++(mother-total-access)</td>
+						</tr>
+						<tr>
+							<td>performance cpu/ram/disk/container</td>
+							<td>++++/++++/++++/++++</td>
+						</tr>
+						<tr>
+							<td>isolation/resouce-sharing</td>
+							<td>---(same kernel)/---</td>
+						</tr>
+						<tr>
+							<td>handling-during runtime</td>
+							<td>+++(easy)</td>
+						</tr>
+						<tr>
+							<td>migration system-system</td>
+							<td>+++(-live)</td>
+						</tr>
+					</table>				</section>
 
 				<section>
 					<h2>vergleich der system</h2>
@@ -111,7 +303,7 @@ Die Loesung ist schwierig/unloesbar je mehr abhaengigkeiten im spiel sind!
 					was ist docker oder rkt
 					managment fuer die vorgearbeiten filesysteme
 					unionfs demo, zfs demo
-					
+
 
 
 				</section>
@@ -133,7 +325,7 @@ Die Loesung ist schwierig/unloesbar je mehr abhaengigkeiten im spiel sind!
 				history: true,
 				center: true,
 
-				transition: 'zoom', // none/fade/slide/convex/concave/zoom
+				transition: 'fade', // none/fade/slide/convex/concave/zoom
 
 				// Optional reveal.js plugins
 				dependencies: [
