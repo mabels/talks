@@ -1,9 +1,14 @@
 #!/bin/sh
 mkdir -p target
 [ ! -d target/reveal.js ] && (cd target && git clone https://github.com/hakimel/reveal.js)
+[ ! -d target/d3 ] && (cd target && git clone https://github.com/mbostock/d3.git)
 [ -d target/reveal.js ] && (cd target/reveal.js && git reset --hard && git pull)
+[ -d target/d3 ] && (cd target/d3 && git reset --hard && git pull)
+
 
 rm -f target/reveal.js/index.html
+(cd target/reveal.js && ln -s ../d3 .)
 (cd target/reveal.js && ln -s ../../index.html index.html && npm install && grunt watch)
 
 
+echo "open file://$(pwd)/target/reveal.js/index.html"
