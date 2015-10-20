@@ -176,11 +176,11 @@ shell3 = {
 							<code class="bash" data-trim contenteditable>
 #/bin/sh
 # Implementierung der Deutsch gesprochenen Raumzeit
-echo “Es ist $(zeit2text)”
+echo “Es ist $(get_raumzeit)”
 							</code>
 							<code class="bash" data-trim contenteditable>
 # ./programm
-Es ist vormittag
+Es ist Vormittag
 </code>
 						</pre>
 						</span>
@@ -192,23 +192,24 @@ Es ist vormittag
 							<code class="bash" data-trim contenteditable>
 #/bin/sh
 # Implementation of the english spoken space time
-echo “It is $(zeit2text)”
+echo “It is $(get_raumzeit)”
 							</code>
 							<code class="bash" data-trim contenteditable>
 # ./programm
-It is <b>vormittag</b>
+It is Vormittag
 						</code>
 						</pre>
 						</p>
+            It is <b style="font-size: 80px">Vormittag</b> (What?!??)
 				</section>
 
 				<section data-background="#990033" data-background-transition="fade">
-						<h2>it might be a ugly place?</h2>
+						<h2>it might be an ugly place?</h2>
 						<span class="fragment">
 							<h3>How to solve this?</h3>
 						</span>
 						<span class="fragment">
-							We need two implementations of "zeit2text" and "program".
+							We need two implementations of "get_raumzeit" and "program".
 						</span>
 						<span class="fragment">
 							<h3>What has to be changed in these programms?</h3>
@@ -220,7 +221,7 @@ It is <b>vormittag</b>
 							directory and no parameters have to be added or enviroment vars are used.</small>
 						</span>
 						<span class="fragment">
-							<h2>Welcome in my (ugly) world!</h2>
+							<h2>Welcome to my (ugly) world!</h2>
 						</span>
 			</section>
 
@@ -230,9 +231,14 @@ It is <b>vormittag</b>
 							<h4>what if we have more than one / ?</h4>
 						</span>
 						<span class="fragment">
-							it is a easy solution if we are able to lead our
-							user to the english or deutsch named /. Yes we still
-							need two implementations but the interface is stable.
+              <p>
+							it is an easy solution if we are able to lead our
+							user to the english or deutsch named /. 
+              </p>
+              <p>
+              Yes we still need two implementations but the 
+              interface is stable.
+              </p>
 						</span>
 						<span class="fragment">
 							<h4>we call these named / a container!</h4>
@@ -272,7 +278,7 @@ It is <b>vormittag</b>
 								<tr>
 									<td>operation</td>
 									<td>$$$$</td>
-									<td>same with higher systemcount</td>
+									<td>same with higher system count</td>
 								</tr>
 								<tr>
 									<td>time</td>
@@ -294,7 +300,7 @@ It is <b>vormittag</b>
 							<li>cost</li>
 							<li>security</li>
 							<li>performance cpu/ram/disk/container</li>
-							<li>isolation/resouce-sharing</li>
+							<li>isolation/resource-sharing</li>
 							<li>handling-during runtime</li>
 							<li>migration system-system</li>
 						</ul>
@@ -318,7 +324,7 @@ It is <b>vormittag</b>
 							<td>++++/++++/+++/++++</td>
 						</tr>
 						<tr>
-							<td>isolation/resouce-sharing</td>
+							<td>isolation/resource-sharing</td>
 							<td>++++/NAN</td>
 						</tr>
 						<tr>
@@ -349,7 +355,7 @@ It is <b>vormittag</b>
 							<td>+++/++++/+++/+++(2xOS)</td>
 						</tr>
 						<tr>
-							<td>isolation/resouce-sharing</td>
+							<td>isolation/resource-sharing</td>
 							<td>+++(different os)/---</td>
 						</tr>
 						<tr>
@@ -364,7 +370,7 @@ It is <b>vormittag</b>
 
 				</section>
 
-        <section data-background="#666622" data-background-transition="slide">
+        <section data-background="#662222" data-background-transition="slide">
           <h2>virtual-machine keyfeatures</h2>
           <span class="fragment">
             <h4>different os xen/hyperv/kvm/virtualbox</h4>
@@ -405,7 +411,7 @@ It is <b>vormittag</b>
 							<td>++++/++++/++++/++++</td>
 						</tr>
 						<tr>
-							<td>isolation/resouce-sharing</td>
+							<td>isolation/resource-sharing</td>
 							<td>---(same kernel)/---</td>
 						</tr>
 						<tr>
@@ -419,7 +425,7 @@ It is <b>vormittag</b>
 					</table>				
         </section>
 
-        <section data-background="#666622" data-background-transition="slide">
+        <section data-background="#662222" data-background-transition="slide">
           <h2>lxc keyfeatures</h2>
           <span class="fragment">
             <h4>lxc/jails/zones</h4>
@@ -429,9 +435,6 @@ It is <b>vormittag</b>
           </span>
           <span class="fragment">
             <h4>central storage/networking</h4>
-          </span>
-          <span class="fragment">
-            <h4>sr-iov</h4>
           </span>
           <span class="fragment">
             <h4>less features/kernel modules/nfs/drb/headless</h4>
@@ -458,8 +461,8 @@ It is <b>vormittag</b>
 							<li>migration system-system</li>
 						</ul>
         </section>
-        <section data-background="#1144dd" data-background-transition="slide">
-          <h2>does we need multiple /?</h2>
+        <section data-background="#1144aa" data-background-transition="slide">
+          <h2>do we need multiple /?</h2>
             <ul>
               <li>depends</li>
               <li>security</li>
