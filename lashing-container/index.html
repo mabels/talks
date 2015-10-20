@@ -359,7 +359,33 @@ It is <b>vormittag</b>
 							<td>++(size)</td>
 						</tr>
 					</table>
+
 				</section>
+
+        <section data-background="#666622" data-background-transition="concave">
+          <h2>virtual-machine keyfeatures</h2>
+          <span class="fragment">
+            <h4>different os xen/hyperv/kvm/virtualbox</h4>
+          </span>
+          <span class="fragment">
+            <h4>central storage/networking</h4>
+          </span>
+          <span class="fragment">
+            <h4>paravirtual drivers</h4>
+          </span>
+          <span class="fragment">
+            <h4>pci-passthrue / sr-iov</h4>
+          </span>
+          <span class="fragment">
+            <h4>fix resources</h4>
+          </span>
+          <span class="fragment">
+            <h4>nesting</h4>
+          </span>
+          <span class="fragment">
+            <h2>see it believed</h2>
+          </span>
+        </section>
 
 				<section data-background="#666622" data-background-transition="concave">
 					<h2>chroot/cgroup</h2>
@@ -388,23 +414,83 @@ It is <b>vormittag</b>
 							<td>migration system-system</td>
 							<td>+++(-live)</td>
 						</tr>
-					</table>				</section>
+					</table>				
+        </section>
 
-				<section>
-					<h2>vergleich der systeme</h2>
+        <section data-background="#666622" data-background-transition="concave">
+          <h2>lxc keyfeatures</h2>
+          <span class="fragment">
+            <h4>lxc/jails/zones</h4>
+          </span>
+          <span class="fragment">
+            <h4>guest == mother (distros)</h4>
+          </span>
+          <span class="fragment">
+            <h4>central storage/networking</h4>
+          </span>
+          <span class="fragment">
+            <h4>sr-iov</h4>
+          </span>
+          <span class="fragment">
+            <h4>less features/kernel modules/nfs/drb/headless</h4>
+          </span>
+          <span class="fragment">
+            <h4>shared resources</h4>
+          </span>
+          <span class="fragment">
+            <h4>nesting</h4>
+          </span>
+          <span class="fragment">
+            <h2>see it believed</h2>
+          </span>
+        </section>
 
+				<section >
+					<h2>choose the right?</h2>
+						<ul>
+							<li>cost</li>
+							<li>security</li>
+							<li>performance cpu/ram/disk/container</li>
+							<li>isolation/resource-sharing</li>
+							<li>handling-during runtime</li>
+							<li>migration system-system</li>
+						</ul>
+        </section>
+        <section>
+          <h2>does we need multiple /?</h2>
+            <ul>
+              <li>depends</li>
+              <li>security</li>
+              <li>stablity of the application external dependencies</li>
+              <li>persitence lifecycle != application lifecycle</li>
+            </ul>
 				</section>
 
 				<section>
-					<h2>gleiche struktur</h2>
-					was ist docker oder rkt
-					managment fuer die vorgearbeiten filesysteme
-					unionfs demo, zfs demo
-
-
-
+					<h2>what next</h2>
+          <ul>
+            <li>running a host
+              <ul>
+                <li>networking bonds + bridges</li>
+                <li>storage md + lvs + unionfs + zfs/btrfs</li>
+              </ul>
+            </li> 
+            <li>working with docker/rkt</li>
+            <li>feel a cluster scheduler
+              <ul>
+                <li>kubernets</li>
+                <li>coreos</li>
+                <li>mesos</li>
+              </ul>
+            </li>
 				</section>
 
+				<section data-background="#111111" data-background-transition="fade" >
+					<h2>thx</h2>
+					<p>
+						<small>powered by <a href="http://github.com/mabels/talks">meno@abels.name</a> / <a href="http://twitter.com/fastandfearless">@fastandfearless</a></small>
+					</p>
+				</section>
 
 				</div>
 		</div>
