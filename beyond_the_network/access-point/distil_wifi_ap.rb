@@ -4,7 +4,7 @@ def distil_wifi_ap(cn)
   cn.region.hosts.add('wifi-ap', "flavour" => "mikrotik") do |ap|
     ap.configip = ap.id ||= Construqt::HostId.create do |my|
       my.interfaces << cn.region.interfaces.add_bridge(ap, "bridge-local",
-      "mtu" => 1500, "address" => cn.network.addresses.add_ip("192.168.88.0/24"),
+      "mtu" => 1500, "address" => cn.network.addresses.add_ip("192.168.88.1/24"),
       "interfaces" => [
         cn.region.interfaces.add_device(ap, "ether2", "mtu" => 1500, "default_name" => "ether2"),
         master_if = cn.region.interfaces.add_wlan(ap, "wlan1", "mtu" => 1500,

@@ -10,6 +10,8 @@ def distil_blended_scotch(cn)
         cn.region.network.addresses.add_ip(Construqt::Addresses::LOOOPBACK))
       host.configip = host.id ||= Construqt::HostId.create do |my|
         my.interfaces << cn.region.interfaces.add_device(host, "eth0", "mtu" => 1500,
+         "firewalls" => ['net-nat'],
+         "vagrant" => Construqt::Hosts::Vagrant.new.ssh_host_port(22000+vlan),
          "plug_in" => Construqt::Cables::Plugin.new.iface(cn.mac_wlan),
          "address" => cn.network.addresses.add_ip(Construqt::Addresses::DHCPV4))
       end
