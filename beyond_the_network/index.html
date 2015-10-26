@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+		<title>beyond the network</title>
 
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
@@ -183,25 +183,50 @@
 
 				</section>
 
-
 				<section>
-					<h2>whats up here?</h2>
-					  <span class="fragment">
-              <p>
-              	We have to independ(yeah) sides here!
-              </p>
-            </span>
-					  <span class="fragment">
-              <p>
-              	But there is no question they have a tight dependency
-              </p
-            </span>
+					<h2>network notations</h2>
+					<div class='left' style='float:left;width:48%'>
+						<span class="fragment">
+							<h4>ip number</h4>
+							<ul>
+								<li>v4 8.8.8.8</li>
+								<li>v6 2001:4860:4860::8888</li>
+							</ul>
+						</span>
+					</div>
+
+					<div class='right' style='float:left;width:48%'>
+								<span class="fragment">
+									<h4>network mask</h4>
+							<ul>
+								<li>255.255.255.0</li>
+								<li>ffff:ffff:ffff::</li>
+							</ul>
+							</span>
+					</div>
+
+								<span class="fragment">
+									<h4>network address</h4>
+									<ul>
+										<li>8.8.8.8 &amp; 255.255.255.0 = 8.8.8.0</li>
+										<li>2001:4860:4860::8888 &amp; ffff:ffff:ffff:: = 2001:4860:4860::</li>
+									</ul>
+							</span>
+							<span class="fragment">
+								<h4>ip &amp; network mask prefix notation</h4>
+								<ul>
+									<li>8.8.8.8/24</li>
+									<li>2001:4860:4860::8888/48</li>
+								</ul>
+							</span>
+
+
 				</section>
 
 				<section>
 					<h2>scottlands / single malt</h2>
             <span class="fragment">
-              <img src="file:///Userssingle_malt/cfgs/world.png" />
+              <img src="single-malt-drawing.jpg" width="300"/>
             </span>
 					  <span class="fragment">
 					    <pre>
@@ -213,7 +238,8 @@ def distil_single_malt(region)
     host.configip = host.id ||= Construqt::HostId.create do |my|
       my.interfaces &lt;&lt; region.interfaces.add_device(host, "eth0",
                          "mtu" =&gt; 1500,
-                         "address" =&gt; region.network.addresses.add_ip(Construqt::Addresses::DHCPV4))
+                         "address" =&gt; region.network.addresses
+												 									       .add_ip(Construqt::Addresses::DHCPV4))
     end
   end
 end
