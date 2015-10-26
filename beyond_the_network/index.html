@@ -57,33 +57,145 @@
 					</ul>
 				</section>
 
-				<!-- Example of nested vertical slides -->
 				<section>
-						<h2>this how we do it</h2>
-					  <span class="fragment">
-              <p>we use the network to manage/establish dependencies between two or more nodes.</p>
-            </span>
-					  <span class="fragment">
-						  <p>but we “configure” each node of these dependency independently.</p>
-            </span>
+					<h2>building blocks</h2>
+					<span class="fragment">
+						<h4>network packets</h4>
+					</span>
+					<span class="fragment">
+						<h4>automatic address discovery</h4>
+					</span>
+					<span class="fragment">
+						<h4>network address translation</h4>
+					</span>
+					<span class="fragment">
+						<h4>packet filtering</h4>
+					</span>
+					<span class="fragment">
+						<h4>packet in packet(tunneling)</h4>
+					</span>
 				</section>
 
 				<section>
-					<h2>managing dependencies</h2>
+					<h2>networking is hard!</h2>
+					<span class="fragment">
+						<h4>developer believe this</h4>
+					</span>
+					<span class="fragment">
+						<h4>network-admin obscure that</h4>
+					</span>
+					<span class="fragment">
+						<h4>application-architects != network-architects</h4>
+					</span>
+					<span class="fragment">
+						<h4>documentation is hard</h4>
+						<img src="patch-panel-hell.jpg" width="300" />
+					</span>
+				</section>
+
+
+				<section>
+					<h2>what is a network?</h2>
+					<span class="fragment">
+						<h4>wikipedia</h4>
+						<p>
+							...<br>
+							<b>Two such devices can be said
+							to be networked together when one device is able to exchange information
+							with the other device</b>, whether or not they have a direct connection to each other.
+						  <br>...
+						</p>
+					</span>
+					<span class="fragment">
+						<h4>managing connections of two or more partners!</h4>
+					</span>
+				</section>
+
+				<section>
+						<h2>manage connection?</h2>
+						<div class='left' style='float:left;width:48%'>
+							<img src="1of2_bridge.jpg" width="600" />
+						</div>
+						<div class='right' style='float:left;width:48%'>
+							<ul>
+								<li>left side with device X</li>
+							</ul>
+						</div>
+				</section>
+
+				<section>
+						<h2>manage connection?</h2>
+						<div class='left' style='float:left;width:48%'>
+							<img src="2of2_bridge.jpg" width="600" />
+						</div>
+						<div class='right' style='float:left;width:48%'>
+							<ul>
+								<li>left side with device X</li>
+								<li>right side with device Y</li>
+								<li>very strong dependency!</li>
+								<li>construction cost left + right</li>
+							</ul>
+						</div>
+				</section>
+
+				<section>
+						<h2>could a developer solve this?</h2>
+						<div class='left' style='float:left;width:48%'>
+							<img src="2of2_bridge.jpg" width="600" />
+						</div>
+						<div class='right' style='float:left;width:48%'>
+							<span class="fragment">
+								YES!<br/>one interface different implementations.
+							</span>
+						</div>
+				</section>
+
+				<section>
+						<h2>what is construqt</h2>
+							<span class="fragment">
+								<ul>
+									<li>construqt is an interface to describe strong depending
+										  network structures.</li>
+								</ul>
+							</span>
+							<span class="fragment">
+								<ul>
+									<li>construqt describes connections(left,right) with same
+								syntax, and hides the implementation details from
+								user. It is vendor agnostic.</li>
+								</ul>
+							</span>
+							<span class="fragment">
+								<ul>
+									<li>construqt uses a programming language(ruby) to describe
+								the network. There is no static configuration file
+								or format or syntax.</li>
+								</ul>
+							</span>
+							<span class="fragment">
+								<ul>
+									<li>construqt knows the described network connections
+								and generates a network-documetation automaticly.
+									</li>
+								</ul>
+								<img src="docu-shot.png" width="400">
+							</span>
+
+				</section>
+
+
+				<section>
+					<h2>whats up here?</h2>
 					  <span class="fragment">
               <p>
-              interaction of objects<br>
-              “Ein bild von einer Jonglierenden Person mit Baellen”
+              	We have to independ(yeah) sides here!
               </p>
             </span>
-
 					  <span class="fragment">
               <p>
-              Model->Views(Praesentation)<br>
-              “Ein bild von einer Jonglierenden Person mit Motorsaegen/Falken”
-              </p>
+              	But there is no question they have a tight dependency
+              </p
             </span>
-
 				</section>
 
 				<section>
