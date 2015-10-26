@@ -9,4 +9,5 @@ do
   (cd target/reveal.js && ln -s ../../$i $i)
 done
 
+echo "open file://$(pwd)/target/reveal.js/index.html"
 
