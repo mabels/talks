@@ -63,6 +63,7 @@
              <li>to much numbers</li>
              <li>to much compressed code</li>
              <li>to long code lines</li>
+             <li>there will be uml</li>
            </ul>
 				</section>
 
@@ -88,10 +89,10 @@
 				<section>
 					<h2>networking is hard!</h2>
 					<span class="fragment">
-						<h4>developer believe this</h4>
+						<h4>developers believe this</h4>
 					</span>
 					<span class="fragment">
-						<h4>network-admin obscure that</h4>
+						<h4>network-admins obscure that</h4>
 					</span>
 					<span class="fragment">
 						<h4>application-architects != network-architects</h4>
@@ -234,181 +235,120 @@
 
 				<section>
 					<h2>scottlands / single malt</h2>
-            <span class="fragment">
+          <div class='left' style='float:left;width:30%'>
+            <span class="fragment" data-fragment-index="0">
               <img src="images/single-malt-drawing.jpg" width="300"/>
             </span>
-					  <span class="fragment">
+            <span class="fragment" data-fragment-index="2">
+              <img src="images/single-malt-generated.png" width="300"/>
+            </span>
+          </div>
+          <div class='left' style='float:left;width:70%'>
+					  <span class="fragment" data-fragment-index="1">
 					    <pre>
                 <code class="hljs" data-trim contenteditable>
 def distil_single_malt(cn)
-  cn.region.hosts.add("single-malt", "flavour" =&gt; "ubuntu") do |host|
-    cn.region.interfaces.add_device(host, "lo", "mtu" =&gt; "9000",
-       "address" =&gt; cn.region.network.addresses.add_ip(Construqt::Addresses::LOOOPBACK))
-    host.configip = host.id ||= Construqt::HostId.create do |my|
-      my.interfaces &lt;&lt; cn.region.interfaces.add_device(host, "eth0",
-       "mtu" =&gt; 1500,
-       "address" =&gt; cn.region.network.addresses.add_ip(Construqt::Addresses::DHCPV4))
+  cn.region.hosts.add("single-malt", 
+    "flavour" =&gt; "ubuntu") do |host|
+      cn.region.interfaces.add_device(host, "lo", 
+        "mtu" =&gt; "9000",
+        "address" =&gt; cn.region.network.addresses
+          .add_ip(Construqt::Addresses::LOOOPBACK))
+      host.configip = 
+      host.id = Construqt::HostId.create do |my|
+        my.interfaces &lt;&lt; cn.region.interfaces
+          .add_device(host, "eth0", "mtu" =&gt; 1500,
+          "address" =&gt; cn.region.network.addresses
+          .add_ip(Construqt::Addresses::DHCPV4))
     end
   end
 end
                 </code>
               </pre>
             </span>
-
-				</section>
-
-				<section>
-					<h2>scottlands / single malt</h2>
           <div>
-						  <div class='left' style='float:left;width:48%'>
-                <img src="images/single-malt-drawing.jpg" width="300"/>
-              </div>
-						  <div class='right' style='float:left;width:48%'>
-							  <img src="images/single-malt-generated.png" width="400"/>
-              </div>
-          </div>
-						  <div style='float:left;width:100%'>
-							<pre>
-								<code class="hljs" data-trim contenteditable>
-def distil_single_malt(cn)
-  cn.region.hosts.add("single-malt", "flavour" =&gt; "ubuntu") do |host|
-    cn.region.interfaces.add_device(host, "lo", "mtu" =&gt; "9000",
-       "address" =&gt; cn.region.network.addresses.add_ip(Construqt::Addresses::LOOOPBACK))
-    host.configip = host.id ||= Construqt::HostId.create do |my|
-      my.interfaces &lt;&lt; cn.region.interfaces.add_device(host, "eth0",
-       "mtu" =&gt; 1500,
-       "address" =&gt; cn.region.network.addresses.add_ip(Construqt::Addresses::DHCPV4))
-    end
-  end
-end
-								</code>
-							</pre>
-              </div>
+
 				</section>
 
 				<section>
 					<h2>scottlands / wifi-access</h2>
-            <span class="fragment">
+          <div class='left' style='float:left;width:30%'>
+            <span class="fragment" data-fragment-index="0">
               <img src="images/wifi-access-drawing.jpg" width="240"/>
             </span>
-					  <span class="fragment">
+            <span class="fragment" data-fragment-index="2">
+              <img src="images/wifi-access-generated.png" width="300"/>
+            </span>
+          </div>
+					  <span class="fragment" data-fragment-index="1">
 					    <pre>
                 <code class="hljs" data-trim contenteditable>
 def distil_wifi_ap(cn)
- cn.region.hosts.add('wifi-ap', "flavour" =&gt; "mikrotik") do |ap|
+ cn.region.hosts.add('wifi-ap',"flavour"=&gt;"mikrotik") do |ap|
   ap.configip = ap.id ||= Construqt::HostId.create do |my|
-   my.interfaces &lt;&lt; cn.region.interfaces.add_bridge(ap, "bridge-local", "mtu" =&gt; 1500,
-    "address" =&gt; cn.network.addresses.add_ip("192.168.88.1/24"), "interfaces" =&gt; [
-     cn.region.interfaces.add_device(ap, "ether2", "mtu" =&gt; 1500, "default_name" =&gt; "ether2"),
-     master_if = cn.region.interfaces.add_wlan(ap, "wlan1", "mtu" =&gt; 1500,
-      "default_name" =&gt; "wlan1", "band" =&gt; "2ghz-b/g/n", "hide_ssid" =&gt; true,
-      "channel_width" =&gt; "20/40mhz-Ce", "country" =&gt; "germany",
-      "mode" =&gt; "ap-bridge", "rx_chain" =&gt; "0,1", "tx_chain" =&gt; "0,1",
-      "ssid" =&gt; "ssid-wifi-geheim",	"psk" =&gt; "psk-wifi-geheim"),
-     (["wifi-con", "wifi-struqt"].map.with_index(300).map { |ssid, vlan|
-      cn.region.interfaces.add_wlan(ap, "wl#{ssid}", "mtu" =&gt; 1500, "vlan_id" =&gt; vlan,
-      "master_if" =&gt; master_if, "ssid" =&gt; ssid.upcase, "psk" =&gt; "#{ssid}-#{vlan}")}))
+   my.interfaces &lt;&lt; cn.region.interfaces.add_bridge(ap, 
+    "bridge-local", "mtu" =&gt; 1500,
+    "address" =&gt; cn.network.addresses.add_ip("192.168.88.1/24"), 
+    "interfaces" =&gt; [
+     cn.region.interfaces.add_device(ap, "ether2", 
+      "mtu" =&gt; 1500, "default_name" =&gt; "ether2"),
+     master_if = cn.region.interfaces.add_wlan(ap, "wlan1", 
+      ...
+      "ssid" =&gt; "ssid-wifi-geheim",
+      "psk" =&gt; "psk-wifi-geheim")]+(["wifi-con", 
+       "wifi-struqt"].map.with_index(300).map { |ssid, vlan|
+        cn.region.interfaces.add_wlan(ap, "wl#{ssid}", 
+         "mtu" =&gt; 1500, "vlan_id" =&gt; vlan, "master_if" =&gt; 
+         master_if, "ssid" =&gt; ssid.upcase, 
+         "psk" =&gt; "#{ssid}-#{vlan}")}))
   end
  end
 end
                 </code>
               </pre>
-
+            </span>
 				</section>
 
-        <section>
-          <h2>scottlands / wifi-access</h2>
-              <div class='left' style='float:left;width:48%'>
-                <img src="images/wifi-access-drawing.jpg" width="240"/>
-              </div>
-              <div class='right' style='float:left;width:48%'>
-                <img src="images/wifi-access-generated.png" width="200"/>
-              </div>
-              <pre>
-                <code class="hljs" data-trim contenteditable>
-def distil_wifi_ap(cn)
- cn.region.hosts.add('wifi-ap', "flavour" =&gt; "mikrotik") do |ap|
-  ap.configip = ap.id ||= Construqt::HostId.create do |my|
-   my.interfaces &lt;&lt; cn.region.interfaces.add_bridge(ap, "bridge-local", "mtu" =&gt; 1500,
-    "address" =&gt; cn.network.addresses.add_ip("192.168.88.1/24"), "interfaces" =&gt; [
-     cn.region.interfaces.add_device(ap, "ether2", "mtu" =&gt; 1500, "default_name" =&gt; "ether2"),
-     master_if = cn.region.interfaces.add_wlan(ap, "wlan1", "mtu" =&gt; 1500,
-      "default_name" =&gt; "wlan1", "band" =&gt; "2ghz-b/g/n", "hide_ssid" =&gt; true,
-      "channel_width" =&gt; "20/40mhz-Ce", "country" =&gt; "germany",
-      "mode" =&gt; "ap-bridge", "rx_chain" =&gt; "0,1", "tx_chain" =&gt; "0,1",
-      "ssid" =&gt; "ssid-wifi-geheim",	"psk" =&gt; "psk-wifi-geheim"),
-     (["wifi-con", "wifi-struqt"].map.with_index(300).map { |ssid, vlan|
-      cn.region.interfaces.add_wlan(ap, "wl#{ssid}", "mtu" =&gt; 1500, "vlan_id" =&gt; vlan,
-      "master_if" =&gt; master_if, "ssid" =&gt; ssid.upcase, "psk" =&gt; "#{ssid}-#{vlan}")}))
-  end
- end
-end
-                </code>
-              </pre>
-
-        </section>
 
         <section>
           <h2>scottlands / blended scotch</h2>
-          <span class="fragment">
-            <img src="images/blended-scotch-drawing.jpg" width="180"/>
-          </span>
-<span class="fragment">
+          <div>
+            <div class='left fragment' data-fragment-index="0" style='float:left;width:30%'>
+              <img src="images/blended-scotch-drawing.jpg" width="180"/>
+            </div>
+            <div class='left fragment' data-fragment-index="2" style='float:left;width:70%'>
+              <img src="images/blended-scotch-generated.png" width="700"/>
+            </div>
+          </div>
+
+<div class="fragment" data-fragment-index="1" style='float:left;width:100%'>
           <pre>
             <code class="hljs" data-trim contenteditable>
 def distil_blended_scotch(cn)
   [300,301].each do |vlan|
-    cn.region.hosts.add("blended-scotch-#{vlan}", "flavour" => "ubuntu") do |host|
-      cn.region.interfaces.add_device(host, "lo", "mtu" => "9000", "address" =>
+    cn.region.hosts.add("blended-scotch-#{vlan}", "flavour" =&gt; "ubuntu") do |host|
+      cn.region.interfaces.add_device(host, "lo", "mtu" =&gt; "9000", "address" =&gt;
         cn.region.network.addresses.add_ip(Construqt::Addresses::LOOOPBACK))
       host.configip = host.id ||= Construqt::HostId.create do |my|
-        my.interfaces << cn.region.interfaces.add_device(host, "eth0", "mtu" => 1500,
-         "address" => cn.network.addresses.add_ip(Construqt::Addresses::DHCPV4))
+        my.interfaces &lt;&lt; cn.region.interfaces.add_device(host, "eth0", "mtu" =&gt; 1500,
+         "address" =&gt; cn.network.addresses.add_ip(Construqt::Addresses::DHCPV4))
       end
-      cn.region.interfaces.add_device(host, "v#{vlan}", "mtu" => 1500, 'address' =>
+      cn.region.interfaces.add_device(host, "v#{vlan}", "mtu" =&gt; 1500, 'address' =&gt;
         cn.region.network.addresses.add_ip("192.168.#{vlan%256}.1/24#INTERNAL-NET",
-        "dhcp_range" => ["192.168.#{vlan%256}.100", "192.168.#{vlan%256}.200"]))
+        "dhcp_range" =&gt; ["192.168.#{vlan%256}.100", "192.168.#{vlan%256}.200"]))
     end
   end
 end
             </code>
           </pre>
-</span>
+</div>
         </section>
 
-<section>
-        <h2>scottlands / wifi-access</h2>
-        <div>
-            <div class='left' style='float:left;width:30%'>
-              <img src="images/blended-scotch-drawing.jpg" width="180"/>
-            </div>
-            <div class='right' style='float:left;width:70%'>
-              <img src="images/blended-scotch-generated.png" width="700"/>
-            </div>
-          </div>
-          <p style='float:left;width:100%'>
-            <pre >
-              <code class="hljs" data-trim contenteditable>
-def distil_blended_scotch(cn)
-  [300,301].each do |vlan|
-    cn.region.hosts.add("blended-scotch-#{vlan}", "flavour" => "ubuntu") do |host|
-      cn.region.interfaces.add_device(host, "lo", "mtu" => "9000", "address" =>
-        cn.region.network.addresses.add_ip(Construqt::Addresses::LOOOPBACK))
-      host.configip = host.id ||= Construqt::HostId.create do |my|
-        my.interfaces << cn.region.interfaces.add_device(host, "eth0", "mtu" => 1500,
-         "address" => cn.network.addresses.add_ip(Construqt::Addresses::DHCPV4))
-      end
-      cn.region.interfaces.add_device(host, "v#{vlan}", "mtu" => 1500, 'address' =>
-        cn.region.network.addresses.add_ip("192.168.#{vlan%256}.1/24#INTERNAL-NET",
-        "dhcp_range" => ["192.168.#{vlan%256}.100", "192.168.#{vlan%256}.200"]))
-    end
-  end
-end
-              </code>
-            </pre>
-          </p>
-      </section>
-
+        <section>
+          <h2>complete network</h2>
+          <iframe data-src='images/blended-scotch-network.svg' width="100%" height="600">
+          </iframe>  
+        </section>
 
         <section>
           <h2>the end...questions?...thx</h2>

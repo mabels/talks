@@ -74,7 +74,7 @@ Vagrant.configure(2) do |config|
 
 
   config.vm.provision :file, source: "cfgs/single-malt/deployer.sh", destination: "deployer.sh"
-  config.vm.provision :file, source: "ssh_host.tar", destination: "ssh_host.tar"
+  config.vm.provision :file, source: "../ssh_host.tar", destination: "ssh_host.tar"
   config.vm.provision :shell, :inline => "sudo tar xvCf /etc/ssh /home/vagrant/ssh_host.tar"
   config.vm.provision :shell, :inline => "sudo bash /home/vagrant/deployer.sh"
   config.vm.provision :shell, :inline => "sudo reboot"
