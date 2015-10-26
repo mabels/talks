@@ -44,7 +44,7 @@
 					<h1>beyond the network</h1>
 					<h3>it is construqtion time</h3>
 					<p>
-						<small>powered by <a href="http://github.com/mabels/construqt">mabels@construqt.net</a> / <a href="http://twitter.com/construqt">@construqt</a></small>
+						<small>powered by http://github.com/mabels/construqt / @construqt</small>
 					</p>
 				</section>
 
@@ -55,6 +55,15 @@
             <li>i’m an admin</li>
             <li>i’m a dev’op</li>
 					</ul>
+          <br>
+          <br>
+          <h4>disclaimer</h4>
+            <ul>
+             <li>bad painter</li>
+             <li>to much numbers</li>
+             <li>to much compressed code</li>
+             <li>to long code lines</li>
+           </ul>
 				</section>
 
 				<section>
@@ -336,6 +345,77 @@ def distil_wifi_ap(cn)
 end
                 </code>
               </pre>
+
+        </section>
+
+        <section>
+          <h2>scottlands / blended scotch</h2>
+          <span class="fragment">
+            <img src="images/blended-scotch-drawing.jpg" width="180"/>
+          </span>
+<span class="fragment">
+          <pre>
+            <code class="hljs" data-trim contenteditable>
+def distil_blended_scotch(cn)
+  [300,301].each do |vlan|
+    cn.region.hosts.add("blended-scotch-#{vlan}", "flavour" => "ubuntu") do |host|
+      cn.region.interfaces.add_device(host, "lo", "mtu" => "9000", "address" =>
+        cn.region.network.addresses.add_ip(Construqt::Addresses::LOOOPBACK))
+      host.configip = host.id ||= Construqt::HostId.create do |my|
+        my.interfaces << cn.region.interfaces.add_device(host, "eth0", "mtu" => 1500,
+         "address" => cn.network.addresses.add_ip(Construqt::Addresses::DHCPV4))
+      end
+      cn.region.interfaces.add_device(host, "v#{vlan}", "mtu" => 1500, 'address' =>
+        cn.region.network.addresses.add_ip("192.168.#{vlan%256}.1/24#INTERNAL-NET",
+        "dhcp_range" => ["192.168.#{vlan%256}.100", "192.168.#{vlan%256}.200"]))
+    end
+  end
+end
+            </code>
+          </pre>
+</span>
+        </section>
+
+<section>
+        <h2>scottlands / wifi-access</h2>
+        <div>
+            <div class='left' style='float:left;width:30%'>
+              <img src="images/blended-scotch-drawing.jpg" width="180"/>
+            </div>
+            <div class='right' style='float:left;width:70%'>
+              <img src="images/blended-scotch-generated.png" width="700"/>
+            </div>
+          </div>
+          <p style='float:left;width:100%'>
+            <pre >
+              <code class="hljs" data-trim contenteditable>
+def distil_blended_scotch(cn)
+  [300,301].each do |vlan|
+    cn.region.hosts.add("blended-scotch-#{vlan}", "flavour" => "ubuntu") do |host|
+      cn.region.interfaces.add_device(host, "lo", "mtu" => "9000", "address" =>
+        cn.region.network.addresses.add_ip(Construqt::Addresses::LOOOPBACK))
+      host.configip = host.id ||= Construqt::HostId.create do |my|
+        my.interfaces << cn.region.interfaces.add_device(host, "eth0", "mtu" => 1500,
+         "address" => cn.network.addresses.add_ip(Construqt::Addresses::DHCPV4))
+      end
+      cn.region.interfaces.add_device(host, "v#{vlan}", "mtu" => 1500, 'address' =>
+        cn.region.network.addresses.add_ip("192.168.#{vlan%256}.1/24#INTERNAL-NET",
+        "dhcp_range" => ["192.168.#{vlan%256}.100", "192.168.#{vlan%256}.200"]))
+    end
+  end
+end
+              </code>
+            </pre>
+          </p>
+      </section>
+
+
+        <section>
+          <h2>the end...questions?...thx</h2>
+          <small>
+            powered by http://github.com/mabels/construqt / @construqt<br>
+            slides:  http://github.com/mabels/talks/beyond_the_network
+          </small>
 
         </section>
 
