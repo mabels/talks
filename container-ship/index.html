@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>container-ship</title>
+
+		<meta name="description" content="container-ship">
+		<meta name="author" content="Meno Abels">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>container-ship</h1>
+					<p>
+          <small>driven by @fastandfearless</small>
+					</p>
+				</section>
+
+				<section>
+					<h2>today</h2>
+					<ul>
+            <li>feedback thx! today get a better start -:)</li>
+            <li>hardware</li>
+            <li>netzwerke</li>
+            <li>application-architectur</li>
+					</ul>
+          <br/>
+          <h2 class="fragment">admin + devops = developers</h2>
+				</section>
+
+				<section>
+					<h2>what is cluster</h2>
+          <h3 class="fragment">some bare-metal computer 2 or more</h3>
+          <h3 class="fragment">some containers more the one typical more than 10</h3>
+          <h3 class="fragment">why we want/need a cluster?</h3>
+            <h4 class="fragment">less powerconsumtion/higher utilisation</h4>
+            <h4 class="fragment">better performance</h4>
+            <h4 class="fragment">better uptime</h4>
+            <h4 class="fragment">mixing different workloads</h4>
+				</section>
+
+				<section>
+					<h2>never get everything</h2>
+						<h4 class="fragment">Consistency (all nodes see the same data at the same time)</h4>
+						<h4 class="fragment">Availability (a guarantee that every request receives a response about whether it succeeded or failed)</h4>
+						<h4 class="fragment">Partition tolerance (the system continues to operate despite arbitrary partitioning due to network failures)</h4>
+          <h3 class="fragment">CAP Therorem!</h3>
+				</section>
+
+
+				<section>
+					<h2>add a container</h2>
+          <h3 class="fragment">Requires high availability typical failure time less than 10sec</h3>
+          <h4 class="fragment">single container hardware/software failure proof...fail</h4>
+          <h4 class="fragment">do container one active one passive...good...scale? (loadbalancer/router)</h4>
+          <h4 class="fragment">adding container which are syncronized...good..scale/performance? (ACID Database Clusters)</h4>
+          <h4 class="fragment">adding containers which shards/hashes/partion/stateless(cdn)...good?</h4>
+          <h3 class="fragment">what if you put more than one container on the same host?</h3>
+				</section>
+
+				<section>
+						<h2>only a few are valid<h2>
+            <img src="images/few-are-valid.png" width="600" />
+				</section>
+
+				<section>
+						<h3>abstract application components</h3>
+							<ul>
+								<li class="fragment">deployment (chef/puppet/ansible)</li>
+								<li class="fragment">router</li>
+								<li class="fragment">dns</li>
+								<li class="fragment">application ip-nr(port)/loadbalancer/webserver</li>
+								<li class="fragment">app-servers</li>
+								<li class="fragment">backend database</li>
+								<li class="fragment">backend dataprocessing(bigdata)</li>
+							</ul>
+				</section>
+
+				<section>
+						<h2>deployment tools</h2>
+							<ul>
+								<li class="fragment">availability</li>
+								<li class="fragment">consitenty</li>
+								<li class="fragment">scalebility</li>
+								<li class="fragment">features
+							    <ul>
+                    <li>switch deployment</li>
+                    <li>rotational deployment</li>
+                    <li>offline deploy</li>
+							    </ul>
+                </li>
+              </ul>
+          </section>
+          <section>
+              <h2>monitoring</h2>
+              <ul>
+								<li class="fragment">availability</li>
+								<li class="fragment">consitenty</li>
+								<li class="fragment">scalebility</li> 
+                <li class="fragment">automatic reconfiguration</li> </ul>
+              </ul>
+          </section>
+          <section>
+              <h2>router</h2>
+              <ul>
+                <li class="fragment">availability</li>
+                <li class="fragment">consitenty</li>
+                <li class="fragment">scalebility</li>
+                <li class="fragment">master-slave (default gw) (vrrp-keepalived)</li>
+                <li class="fragment">master-master(ospf-bgp) (-loadbalancing)</li>
+                <li class="fragment">dhcp-shared-state</li>
+              </ul>
+            </section>
+            <section>
+              <h2>dns</h2>
+              <ul>
+                <li class="fragment">availability</li>
+                <li class="fragment">consitenty</li>
+                <li class="fragment">scalebility rr-ip and failovers</li>
+                <li class="fragment">atleast three different ip# in a own segment</li>
+							</ul>
+            </section>
+
+            <section>
+              <h2>webserver</h2>
+					    <div class='left' style='float:left;width:48%'>
+              <ul>
+                <li class="fragment">DNS-Roundrobin/Geoip</li>
+                <li class="fragment">L2
+                  <ul>
+                    <li>ipvs/iptables</li>
+                    <li>keepalived</li>
+                  </ul>
+                </li>
+                <li class="fragment">L3 to L7
+                  <ul>
+                    <li> haproxy</li>
+                    <li> nginx</li>
+                    <li> apache</li>
+                  </ul>
+                </li>
+              </ul>
+              </div>
+              <div class='right' style='float:left;width:48%'>
+                <img src="images/web-server.png"> 
+              </div>
+				    </section>
+
+            <section>
+              <h2>app-server</h2>
+              <ul>
+                <li class="fragment">nginx + Phusion Passenger + unicorn</li>
+                <li class="fragment">tomcat/JETTY/WEBSPHERE....</li>
+                <li class="fragment">NGINX/APACHE + PHP</li>
+                <li class="fragment">APP-StaTE/STICKY-Session/SESSION-Sharing</li>
+                <li class="fragment">CRASH-DETECtioN-RETRY-RESTART</li>
+              </ul>
+				    </section>
+            <section>
+              <h2>database-persitence</h2>
+              <ul>
+                <li class="fragment">master-standby</li>
+                <li class="fragment">master-slave-slave</li>
+                <li class="fragment">master-master-master</li>
+                <li class="fragment">(master-partion-1)-(master-partion-2)-master-partion(3)</li>
+                <li class="fragment">ring-ring-ring (mandelbrot-layers) recursive</li>
+                <li class="fragment">storage == host + transactionlog ACID</li>
+                <li class="fragment">no permenant storage(rolling deployment one by one)</li>
+                <li class="fragment">resync times/startup times</li>
+              </ul>
+            </section>
+            <section>
+              <h2>event or batch dataprocessing(bigdata)</h2>
+              <ul>
+                <li class="fragment">runtimes forever or longer than 10 hours</li>
+                <li class="fragment">dynamic scaling depending on workload</li>
+                <li class="fragment">don't miss one event</li>
+                <li class="fragment">don't miss your temporary results if the aggreation for one day need 22h you can repeat it</li>
+              </ul>   
+            </section>
+            <section>
+              <h2>so much different requirements in one cluster</h2>
+              <ul>
+                <li class="fragment">solution I: one cluster per application style</li>
+                <li class="fragment">solution II: one cluster for all</li>
+              </ul> 
+              <h3 class="fragment">the process of assiging/deploy an application to a cluster is
+                named orchestration!</h3>
+            </section>
+
+				<section>
+					<h2>universal host</h2>
+            <ul>
+              <li class="fragment">storage/disc redunant reboot/crash safe</li>
+              <li class="fragment">network external and internal networks</li>
+            </ul>
+        </section>  
+				<section>
+					<h2>universal host storage</h2>
+            <ul>
+              <li class="fragment">all host are equal but what is in 1 year?</li>
+              <li class="fragment">use raid 1,6,10,... database server are different?</li>
+              <li class="fragment">if you use raid use software raids, to move 
+                                   discs between different hardware</li>
+              <li class="fragment">every container should have its own filesystem lvm</li>
+              <li class="fragment">faster deployment with btrfs or zfs (snapshots-raw copy)</li>
+            </ul>
+        </section>
+				<section>
+					<h2>universal host network</h2>
+            <ul>
+              <li class="fragment">for every network we need one cable,... 
+                                   this is not buildable 20 cables in one box</li>
+              <li class="fragment">vlan's to the rescue, one cable, virtual cable on it, needs support from the switches, does not scale to more than 4095, but there is something else vxlan out, but this has a build in security problem.
+              </li>
+              <li class="fragment">deployment of the switches but how?
+                <ul>
+                <li>every host has to legs one the left one to the right, they are bonded/lacp(active-backup) mode</li> 
+                <li>every leg is connected to a different switch called TOR(Top of rack)</li> 
+                <li>there is one network which has a not performance requirement, but very high requirement of security and availability needs a own cable (ipmi)(3 switch per rack)</li> 
+               </ul> 
+             </li> 
+            </ul>
+        </section>                 
+				<section>
+					<h2>universal host network services</h2>
+            <ul>
+              <li class="fragment">routing(access/deployment)</li>
+              <li class="fragment">dhcp(deployment)</li>
+              <li class="fragment">tftp(deployment)</li>
+              <li class="fragment">backing store ubuntu mirror(don't hit offical mirrors with a deployment of huge numbers of cluster members</li>
+            </ul>
+        </section>
+				<section>
+					<h2>universal host internal network</h2>
+            <img src="images/kerzenstaender.png" width="500">
+        </section>
+
+        <section>
+          <h2>wrapup</h2>
+          <ul>
+            <li class="fragment">orchestration is hard!</li>
+            <li class="fragment">storage is pretty complex</li>
+            <li class="fragment">network is pretty complex</li>
+            <li class="fragment">it gets easy on scale &gt;20 http://www.supermicro.nl/products/system/3u/5038/sys-5038ma-h24trf.cfm but be carefull (do systems per blade/two switches per blades... no bonding)</li>
+        </section>
+        <section>
+          <h2>the end...questions?...thx</h2>
+          <small>
+            powered by http://github.com/mabels/construqt / @construqt<br>
+            slides:  http://github.com/mabels/talks/beyond_the_network
+          </small>
+
+        </section>
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'zoom', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+      Reveal.addEventListener( 'customevent', function() {
+          console.log( '"customevent" has fired' );
+      } );
+
+		</script>
+
+	</body>
+</html>
