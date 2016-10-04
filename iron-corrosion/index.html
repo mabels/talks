@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>iron corrosion</title>
+
+		<meta name="description" content="iron corrosion forms rust">
+		<meta name="author" content="Meno Abels">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>iron corrosion</h1>
+					<h3>forms rust</h3>
+					<p>
+						<small>powered by http://github.com/mabels/construqt / @construqt</small>
+					</p>
+				</section>
+
+				<section>
+					<h2>about me</h2>
+					<ul>
+            <li>i’m a software developer</li>
+            <li>i’m an admin</li>
+            <li>i’m a dev’op</li>
+					</ul>
+          <br>
+          <br>
+          <h4>disclaimer</h4>
+          <small>
+            <ul>
+             <li>to much numbers</li>
+             <li>to much compressed code</li>
+             <li>to long code lines</li>
+           </ul>
+          </small>
+				</section>
+
+				<section>
+					<h2>iron corrosion</h2>
+					<h2>is</h2>
+					<h1>Rust</h1>
+					<h3>it will not have a hype!</h3>
+				</section>
+
+				<section>
+					<h2>It's special -- Rust !</h2>
+					<ul>
+            <li>There are a lot if/while/for languages
+                C#/JS/Java/go/C/C++/python/ruby/php/…</li>
+						<li>It compiles to native platforms currently X86,AMD64, arm</li>
+						<li>It has no runtime library nor runtime(node/ruby/php)</li>
+						<li>Runtime Performance is very close to c/c++</li>
+						<li>It has a nice two way c binding<br/>
+            Rust → C<br/>
+            C → Rust
+          </li>
+					</ul>
+				</section>
+
+
+				<section>
+					<h2>Why is Rust special?</h2>
+          <ul>
+            <li>nearst match are: go,c/c++</li>
+            <li>C/C++ has no GC</li>
+            <li>go has GC</li>
+            <li>Rust no GC</li>
+          </ul>
+
+				</section>
+
+				<section>
+						<h2>Implementation Complexity</h2>
+            <ul>
+              <li>GC Based Languages (mostly)no extra efforts for memory handling</li>
+              <li>NonGC Languages 90% of the Implementation Time/Complexity is dedicated to the Memory Housekeeping</li>
+              <li>GC Implementation  Complexity/Time is 1</li>
+              <li>NonGC Implementation Complexity/Time is 10</li>
+            </ul>
+				</section>
+
+				<section>
+						<h2>Why is C++ 10times more Complex<br/>
+                Just a bit C++</h2>
+					  <span class="fragment">
+					    <pre>
+                <code class="hljs" data-trim contenteditable>
+class Example { };
+int main() {
+  for (int i = 5; i < 1000; ++i) {
+    new Example();
+  }
+}
+                </code>
+              </pre>
+            </span>
+					  <span class="fragment">
+					    <pre>
+                <code class="hljs" data-trim contenteditable>
+class Elpmaxe { public: string *lost; }
+int main() {
+  auto x = new Elpmaxe();
+  x.lost = new std::string(“lost”);
+}
+                </code>
+              </pre>
+            </span>
+
+            <span class="fragment">
+              There is no comparable problem in the GC World!
+            </span>
+				</section>
+
+
+
+        <section>
+          <h2>What can we do!<br/>to make Rust more robust</h2>
+          <ul>
+           <li>No new</li>
+           <li>Remove nullablity null/nil/0</li>
+           <li>Remove unassignables, Clear ownership</li>
+           <li>Remove Exceptions</li>
+         </ul>
+        </section>
+
+        <section>
+          <h2>Tuff Constrains<br/>no new</h2>
+          <span class="fragment">
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+let y=new Cup();
+let byStyle={tee: y};
+let aList=[y];
+process(y, byStyle, aList)
+              </code>
+            </pre>
+          </span>
+
+        </section>
+
+        <section>
+          <h2>Tuff Constrains<br/>no null/nil</h2>
+          <span class="fragment">
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+function process() {
+  let a = Date.now()%86400;
+  if (10000 < a && a < 50000) { return “Ready” }
+  return null;
+}
+if (process()) {
+  doit();
+}
+              </code>
+            </pre>
+          </span>
+
+        </section>
+
+        <section>
+          <h2>Tuff Constrains<br/></h2>
+          <span class="fragment">
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+function process() { return new Processor() }
+process()
+</code>
+            </pre>
+Nobody owns or the scope is of “new Processor()” is unclear, in GC Processor lives for ever if it references it self…e.g. by a own thread              </code>
+          </span>
+
+        </section>
+
+        <section>
+          <h2>Tuff Constrains<br/>no exceptions</h2>
+          <span class="fragment">
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+throw “This is wrong”
+              </code>
+            </pre>
+            or
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+let a = 17;
+let b = 0;
+let c = a/b
+              </code>
+            </pre>
+            this is not handleable → panic
+        </span>
+
+        </section>
+        <section>
+          <h2>QED</h2>
+          <span class="fragment">
+        <h4>Programming still is possible</h4>
+          </span>
+          <span class="fragment">
+        <h4>There are no Memoryleaks, We could build a compiletime<br/>
+            check of ownership, called Borrowchecker in Rust</h4>
+      </span>
+          <span class="fragment">
+        <h4>There are hard panic's</h4>
+      </span>
+          <span class="fragment">
+        <h4>We Return always a Result Generic</h4>
+        <pre>
+          <code class="hljs" data-trim contenteditable>
+let r : Result&lt;T, String&gt; = action();
+match r {
+    Ok(t) => println!("result:{}", t.get_stuff()),
+    Err => println!("{}", r.unwrap_err())
+}
+          </code>
+        </pre>
+
+      </span>
+          <span class="fragment">
+        <h4>Make Multithreading more stable, there is from the language no shared/side-effects ownership between a thread's data and a other.</h4>
+      </span>
+      </section>
+      <section>
+        <h2>Complexity/Time</h2>
+
+        <ul>
+          <li>GC Bases 1</li>
+          <li>NonGC C/C++ 10</li>
+        </ul>
+
+        <ul>
+          <li>RUST complexity is ~3</li>
+          <li>thats makes Rust special!</li>
+          <li>There is no other languages between 1-10!</li>
+        </ul>
+
+        <span class="fragment">
+          <h4>Runtime Performance is very close to c/c++</h4>
+        </span>
+
+      </section>
+      <section>
+        <h2>behind the scene's<br/>for what it was made for</h2>
+        <span class="fragment">
+<h4>Mozilla develops it for the Browser</h4>
+        </span>
+        <span class="fragment">
+<h4>The Browser called Servo</h4>
+        </span>
+        <span class="fragment">
+<h4>Some code is in Firefox 48&gt;</h4>
+        </span>
+        <span class="fragment">
+<h4>It out for ~2 Years</h4>
+        </span>
+        <span class="fragment">
+<h4>Nice and cute Community</h4>
+        </span>
+      </section>
+
+      <section>
+        <h2>syntax rules/notation</h3>
+        <span class="fragment">
+<h4>CAPTIAL Constant</h4>
+</span>
+        <span class="fragment">
+<h4>CamelCase for Structs</h4>
+</span>
+        <span class="fragment">
+<h4>lowdash for methods to_string</h4>
+</span>
+        <span class="fragment">
+<h4>Makro! </h4>
+</span>
+        <span class="fragment">
+<h4>strictly enforced!</h4>
+        </span>
+      </section>
+
+        <section>
+          <h2>Copy not Reference<br/>
+Const is the new Normal</h2>
+    <span class="fragment">
+  <pre>
+    <code class="hljs" data-trim contenteditable>
+struct HW { hello: string, world: string }
+let a = HW { hello: “Hello”, world: “World” }
+let b = a
+let ref c = a
+let mut d = a;
+d.hello = “Tach”
+</code>
+</pre>
+</span>
+</section>
+
+<section>
+  <h2>Strings are mutable</h2>
+<span class="fragment">
+  <h4>there are two string types</h4>
+<h4>CONSTANT</h4>
+'static & str <=> &str</br>
+'static declares the scope of the string
+<h4>MUTABLE</h4>
+string convert to &str is not possible<br/>
+&str to string → “xx”.to_string()<br/>
+&str to string → string::from(“xx”)
+</span>
+</section>
+
+<section>
+  <h2>String formating</h2>
+<span class="fragment">
+  <pre>
+    <code class="hljs" data-trim contenteditable>
+let m: string = format!(“{}: {}”, 5, 'ty');
+  </code>
+</pre>
+The first argument has to be a '&str to be resolved <br/>
+during compile time.<br/>
+There is no dyamic formatting….<br/>
+string → '&str does not work
+</span>
+</section>
+
+<section>
+  <h2>Generics/Templates</h2>
+<span class="fragment">
+<pre><code class="hljs" data-trim contenteditable>
+enum Option&lt;T&gt; {
+    Some(T),
+    None,
+}
+</pre></code>
+<pre><code class="hljs" data-trim contenteditable>
+fn takes_anything&lt;T&gt;(x: T) {
+    // do something with x
+}
+</pre></code>
+<pre><code class="hljs" data-trim contenteditable>
+struct Point&lt;T&gt; {
+    x: T,
+    y: T,
+}
+</pre></code>
+</span>
+</section>
+
+<section>
+  <h2>HeapMemory Helper</h2>
+<span class="fragment">
+<pre><code class="hljs" data-trim contenteditable>
+struct HW { hello: string, world: string }
+let a = Box&lt;HW&gt;(HW { hello: “W”, world: “X”});
+let c = a;
+let d = a;
+c.unwrap().hello = “X”;
+if d.unwrap().hello == “X”
+</pre></code>
+</section>
+
+<section>
+  <h2>What is art/Is this ugly</h2>
+<span class="fragment">
+<pre><code class="hljs" data-trim contenteditable>
+let r: Result&lt;HW&gt; = u.parse(“x”.to_string());
+let mut m: string = "";
+match r.getH() {
+	Ok(s) -> m = s;
+	Err -> return Err(r.unwrap_err())
+}
+m += “...Fertig”;
+</code></pre>
+</span>
+</section>
+
+<section>
+  <h2>Toolchain</h2>
+<span class="fragment">
+<h3>Rustup → nvm,rvm,rbenv</h3>
+<h4>rustup show</h4>
+<h4>rustup default nightly-x86_64-apple-darwin</h4>
+<h4>rustup default stable-x86_64-apple-darwin</h4>
+</span>
+<span class="fragment">
+<h3>cargo → Npm,gem (source distribution, localcompile)</h3>
+</span>
+<span class="fragment">
+<h3>rustc compiler</h3>
+</span>
+</section>
+
+<section>
+  <h2>Project boilerplate</h2>
+<h3>Cargo.toml</h3>
+<pre><code class="hljs" data-trim contenteditable>
+[package]
+name = "hi-world"
+description = "Hi World template"
+repository = "https://github.com/mabels/hiworld"
+readme = "../README.md"
+keywords = ["foo"]
+license = "MIT"
+version = "0.1.1"
+authors = ["Duck Foo &lt;duck.foo@world.de&gt;"]
+[dependencies]
+</code></pre>
+</section>
+
+
+<section>
+  <h2>Hello World</h2>
+<h3>src/main.rs</h3>
+<pre><code class="hljs" data-trim contenteditable>
+fn main() {
+  println!("Hello World");
+}
+</code></pre>
+<pre><code class="hljs" data-trim contenteditable>
+# cargo build
+# target/debug/hi-world
+# cargo run
+</code></pre>
+</section>
+
+
+<section>
+  <h2>No class, just a struct</h2>
+<h3>src/main.rs</h3>
+<pre><code class="hljs" data-trim contenteditable>
+struct HW {
+  h: String,
+  w: String,
+  us: usize
+}
+fn main() {
+  let a = HW{ h: "H".to_string(), w: "W".to_string(), us: 4711 };
+  println!("{}: {}", a.h, a.us);
+}
+</code></pre>
+</section>
+
+
+<section>
+  <h2>No class, but we can implement methods</h2>
+<h3>src/main.rs</h3>
+<pre><code class="hljs" data-trim contenteditable>
+struct HW {
+  h: String,
+  w: String,
+  us: usize
+}
+impl HW {
+  fn create() -> HW {
+    return HW{ h: "H".to_string(), w: "W".to_string(), us: 4711 };
+  }
+  fn print(&self) {
+   println!("{}: {}", self.h, self.us);
+  }
+}
+fn main() {
+ let a = HW::create();
+ a.print();
+}
+</code></pre>
+</section>
+
+<section>
+  <h2>No class, No Interfaces but Traits</h2>
+<h3>src/main.rs</h3>
+<pre><code class="hljs" data-trim contenteditable>
+trait HasPrint {
+  fn print(&self);
+}
+struct HW { h: String, w: String, us: usize }
+impl HW {
+  fn create(us: usize) -> HW {
+    return HW{ h: "H".to_string(), w: "W".to_string(), us: us };
+  }
+}
+impl HasPrint for HW {
+  fn print(&self) {
+   println!("{}: {}", self.h, self.us);
+  }
+}
+fn main() {
+ let lower = HW::create(4711);
+ lower.print();
+}
+</code></pre>
+Mixins on stereoits, the implementation can be
+everywhere.
+</section>
+
+<section>
+  <h2>Where is my null,<br/> no it's a option</h2>
+<h3>src/main.rs</h3>
+<pre><code class="hljs" data-trim contenteditable>
+fn on_even(nr: usize) -> Option&lt;String&gt; {
+  if nr%2 == 0 {
+      return Some(format!("I'm even {}", nr));
+  }
+  return None;
+}
+fn main() {
+  for i in 0..10 {
+    match on_even(i) {
+      Some(t) => println!("{}", t),
+      None => {}
+    }
+  }
+}
+</code></pre>
+</section>
+
+<section>
+  <h2>If it comes to heap</h2>
+  <pre><code class="hljs" data-trim contenteditable>
+use std::collections::HashMap;
+use std::cell::RefCell;
+struct HW { word_count: usize }
+fn main() {
+  let mut page_idx = HashMap::new();
+  page_idx.insert(1, RefCell::new(HW{word_count: 45}));
+  page_idx.insert(2, RefCell::new(HW{word_count: 90}));
+  page_idx.insert(3, RefCell::new(HW{word_count: 135}));
+  let mut pages : Vec&lt;&RefCell&lt;HW&gt;&gt; = vec![
+                       page_idx.get(&1).unwrap().clone(),
+                       page_idx.get(&2).unwrap().clone(),
+                       page_idx.get(&3).unwrap().clone()];
+  pages[1].borrow_mut().word_count = 4711;
+  println!("{}",page_idx.get(&2).unwrap().borrow().word_count);
+  for i in pages.iter() { println!("{}", i.borrow().word_count); }
+}
+</code></pre>
+</section>
+
+<section>
+  <h2>Wrapup</h2>
+<h4>Don't use it for everything, it's to complex/expensive</h4>
+<h4>If want to use Rust, keep in mind the eco system is small</h4>
+<h4>It's good for Small and Fast so it's good for small and slow devices IoT</h4>
+<h4>It's Good for tools or huge apps with huge teams which has to be native!<br/>
+   Like a Browser remind for Rust was build for! </h4>
+<h4>Thx Mozilla Servo</h4>
+<h4>Thx Mozilla to build a Special/Uniq Language!</h4>
+</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+      Reveal.addEventListener( 'customevent', function() {
+          console.log( '"customevent" has fired' );
+      } );
+
+		</script>
+
+	</body>
+</html>
