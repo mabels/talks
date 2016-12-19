@@ -1,0 +1,96 @@
+
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\geometry{
+   a4paper,
+   left=15mm,
+   top=15mm,
+}
+%\usepackage[pass]{geometry}
+%\pdfpageheight=210mm
+%\pdfpagewidth=148mm
+
+\usepackage{lipsum}  % this package is for creating filler text
+\usepackage{listings}
+\usepackage{color}
+\usepackage{courier}
+\usepackage{setspace}
+\usepackage{etoolbox}
+\usepackage{titlesec}
+
+%\usepackage[print,1to1]{booklet} \nofiles 
+%\target{\magstep0}{297mm}{210mm}
+
+
+% \usepackage[titles]{tocloft}
+
+% \setlength{\cftbeforechapskip}{.1ex}
+% \setlength{\cftbeforesecskip}{-.5ex}
+
+
+\lstset{
+  keepspaces=true,
+  numbers=left,
+  basicstyle=\large\ttfamily,
+  title=\lstname
+}
+
+%\titleformat*{\section}{\large\bfseries}
+%\titleformat*{\subsection}{\large\bfseries}
+
+
+
+%\author{Meno Abels}
+\title{The codebook}
+
+
+% \usepackage[print,1to1]{booklet} \nofiles
+% \target{\magstep0}{297mm}{210mm}
+
+
+\begin{document}
+
+\maketitle
+\pagebreak
+
+Das ist leer
+\renewcommand{\baselinestretch}{0.8}\normalsize
+% \tableofcontents
+% \renewcommand{\baselinestretch}{1.0}\normalsize
+
+
+\pagebreak
+
+\lstinputlisting{0-simple.js}
+\lstinputlisting{1-not-so-simple.js}
+\lstinputlisting{2-even-not-simple.js}
+\pagebreak
+
+\lstinputlisting{3-first.c}
+\pagebreak
+\lstinputlisting{4-trans-length.c}
+\pagebreak
+\lstinputlisting{5-paradox.c}
+\pagebreak
+\lstinputlisting{6-construct.cc}
+\pagebreak
+\lstinputlisting{HelloWorld.hh}
+\lstinputlisting{7-copy-cat.cc}
+\pagebreak
+\lstinputlisting{8-nullable.cc}
+\pagebreak
+\lstinputlisting{9-first-rust.rs}
+\pagebreak
+\lstinputlisting{10-exceptions.cc}
+\pagebreak
+\lstinputlisting{11-rust-result.rs}
+\pagebreak
+\lstinputlisting{12-mutable-ref.rs}
+\pagebreak
+\lstinputlisting{13-option.rs}
+\lstinputlisting{14-template.rs}
+\pagebreak
+%\lstinputlisting{15-boxing.rs}
+\lstinputlisting{16-reference.rs}
+
+\end{document}

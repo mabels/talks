@@ -33,7 +33,6 @@
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
 	</head>
-
 	<body>
 
 		<div class="reveal">
@@ -112,131 +111,384 @@
 				</section>
 
 				<section>
-						<h2>Why is C++ 10times more Complex<br/>
-                Just a bit C++</h2>
-					  <span class="fragment">
-					    <pre>
-                <code class="hljs" data-trim contenteditable>
-class Example { };
-int main() {
-  for (int i = 5; i < 1000; ++i) {
-    new Example();
-  }
+          <h2>Why is C++ 10times more Complex
+              </br>
+              What does a GC
+          </h2>
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+// easy going
+function helloWorld() {
+  return ["Hello", " ", "World"].join("")
 }
-                </code>
-              </pre>
-            </span>
-					  <span class="fragment">
-					    <pre>
-                <code class="hljs" data-trim contenteditable>
-class Elpmaxe { public: string *lost; }
-int main() {
-  auto x = new Elpmaxe();
-  x.lost = new std::string(“lost”);
+console.log(helloWorld());
+              </code>
+            </pre>
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+// easy going
+function helloWorld() {
+  let r = "";
+  // let a="y"; ((a) => { a+="xxx"; })(a); console.log(a);
+  ["Hello", " ", "World"].forEach((s) => r += s)
+  return r;
 }
-                </code>
-              </pre>
-            </span>
+console.log(helloWorld());
+              </code>
+            </pre>
+        </section>
+        <section>
+          <h2>Papersheet Programming</h2>
+          <pre>
+            <code class="hljs" data-trim contenteditable>
+// more transparent, lets count the instances
+// buf.join or no mutable strings are a pain.
+function helloWorld() {
+  let a = new Array();
+  a.push(new String("Hello"))
+  a.push(new String(" "))
+  a.push(new String("World"))
+  let len = 0;
+  a.forEach((u) =&gt;  {
+    len += u.length
+  })
+  let buf = new Array(len);
+  let cnt = 0
+  a.forEach((k) =&gt; {
+    for (let q = 0; q &lt; k.length; ++q) {
+      buf[cnt++] = k[q]
+    }
+  })
+  return buf.join("")
+}
+console.log(helloWorld());
+            </code>
+          </pre>
+        </section>
+        <section>
+          <h2>Lets C</h2>
+          <pre>
+          <code class="hljs" data-trim contenteditable>
+// c not so bad but we don't have to
+// forget the free!
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
 
-            <span class="fragment">
-              There is no comparable problem in the GC World!
-            </span>
+char *helloWorld() {
+  const char *a[] = { "Hello", " ", "World" };
+  int len = 0;
+  for (int r = 0; r &lt; sizeof(a)/sizeof(*a); ++r) {
+    len += strlen(a[r]);
+  }
+  char *buf = malloc(len+1);
+  int cnt = 0;
+  for (int i = 0; i &lt; sizeof(a)/sizeof(*a); ++i) {
+    for (int q = 0; q &lt; strlen(a[i]); ++q) {
+      buf[cnt++] = a[i][q]; //mutable string
+    }
+  }
+  buf[cnt]=0;
+  return buf;
+}
+int main() {
+  char *ret = helloWorld();
+  printf("%s\n", ret);
+  free(ret); // das kann man schon mal vergessen
+  return 0;
+}
+                </code>
+          </pre>
+        </section>
+        <section>
+          <h2>Avoid to loose a free</h2>
+          <pre>
+          <code class="hljs" data-trim contenteditable>
+// defect but this how to transfer length
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+char *helloWorld() {
+  const char *a[] = { "Hello", " ", "World" };
+  int len = 0;
+  for (int r = 0; r &lt; sizeof(a)/sizeof(*a); ++r) {
+    len += strlen(a[r]);
+  }
+  char *buf = malloc(len+1);
+  int cnt = 0;
+  for (int i = 0; i &lt; sizeof(a)/sizeof(*a); ++i) {
+    for (int q = 0; q &lt; strlen(a[i]); ++q) {
+      buf[cnt++] = a[i][q];
+    }
+  }
+  return ret;
+  free(buf); // will not be called
+}
+int main() {
+  char *ret = whatmemory(whatsize);
+  strcpy(ret, helloWorld());
+  printf("%s\n", ret);
+  return 0;
+}
+                </code>
+          </pre>
+        </section>
+        <section>
+          <h2>Dynamic size paradox</h2>
+          <pre>
+                <code class="hljs" data-trim contenteditable>
+// dynamic sized typed paradox
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+typedef struct {
+  int len;
+  char ret[len+1];
+} HelloWorld;
+
+HelloWorld&lt;len&gt; helloWorld() {
+  const char *a[] = { "Hello", " ", "World" };
+  int len = 0;
+  for (int r = 0; r &lt; sizeof(a)/sizeof(*a); ++r) {
+    len += strlen(a[r]);
+  }
+  HelloWorld&lt;len&gt; hw;
+  int cnt = 0;
+  for (int i = 0; i &lt; sizeof(a)/sizeof(*a); ++i) {
+    for (int q = 0; q &lt; strlen(a[i]); ++q) {
+      hw.ret[cnt++] = a[i][q];
+    }
+  }
+  return hw;
+}
+int main() {
+  // mmh where could the len be known upfront?
+  HelloWorld&lt;len&gt; hw = helloWorld();
+  printf("%s\n", hw.ret);
+  return 0;
+}
+                </code>
+          </pre>
+        </section>
+        <section>
+          <h2>concept destructor</h2>
+          <pre>
+            <code class="hljs" data-trim contenteditable>
+// concept destructor
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+class HelloWorld {
+public:
+  int len;
+  char *ret;
+  HelloWorld(int len) : len(len), ret(malloc(len+1)) {
+  }
+  ~HelloWorld() {
+    free(ret);
+  }
+};
+
+HelloWorld helloWorld() {
+  const char *a[] = { "Hello", " ", "World" };
+  int len = 0;
+  for (int r = 0; r &lt; sizeof(a)/sizeof(*a); ++r) {
+    len += strlen(a[r]);
+  }
+  HelloWorld hw(len);
+  int cnt = 0;
+  for (int i = 0; i &lt; sizeof(a)/sizeof(*a); ++i) {
+    for (int q = 0; q &lt; strlen(a[i]); ++q) {
+      hw.ret[cnt++] = a[i][q];
+    }
+  }
+  return hw;
+}
+int main() {
+  HelloWorld hw = helloWorld();
+  // hw boom? why? (freed before use)
+  printf("%s\n", hw.ret);
+  return 0;
+}
+                </code>
+          </pre>
+        </section>
+        <section>
+          <h2>copy constructor</h2>
+          <pre>
+                <code class="hljs" data-trim contenteditable>
+// copy constructor
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+class HelloWorld {
+public:
+  int len;
+  char *ret;
+  HelloWorld(int len) : len(len), ret(malloc(len+1)) {
+  }
+  HelloWorld(HelloWorld &amp;hw) : len(hw.len), ret(malloc(hw.len+1)) {
+    memcpy(this.ret, hw.ret, len);
+  }
+  ~HelloWorld() {
+    free(ret);
+  }
+};
+
+HelloWorld helloWorld() {
+  const char *a[] = { "Hello", " ", "World" };
+  int len = 0;
+  for (int r = 0; r &lt; sizeof(a)/sizeof(*a); ++r) {
+    len += strlen(a[r]);
+  }
+  HelloWorld hw(len);
+  int cnt = 0;
+  for (int i = 0; i &lt; sizeof(a)/sizeof(*a); ++i) {
+    for (int q = 0; q &lt; strlen(a[i]); ++q) {
+      hw.ret[cnt++] = a[i][q];
+    }
+  }
+  return hw;
+}
+
+int main() {
+  HelloWorld hw = helloWorld();
+  printf("%s\n", hw.ret);
+  return 0;
+}
+              </pre>
+            </code>
 				</section>
 
-
-
         <section>
-          <h2>What can we do!<br/>to make Rust more robust</h2>
+          <h2>What can we do!<br/>to make Rust more robust like C/C++</h2>
           <ul>
-           <li>No new</li>
-           <li>Remove nullablity null/nil/0</li>
-           <li>Remove unassignables, Clear ownership</li>
-           <li>Remove Exceptions</li>
-         </ul>
-        </section>
-
-        <section>
-          <h2>Tuff Constrains<br/>no new</h2>
-          <span class="fragment">
-            <pre>
-              <code class="hljs" data-trim contenteditable>
-let y=new Cup();
-let byStyle={tee: y};
-let aList=[y];
-process(y, byStyle, aList)
-              </code>
-            </pre>
-          </span>
-
-        </section>
-
-        <section>
-          <h2>Tuff Constrains<br/>no null/nil</h2>
-          <span class="fragment">
-            <pre>
-              <code class="hljs" data-trim contenteditable>
-function process() {
-  let a = Date.now()%86400;
-  if (10000 < a && a < 50000) { return “Ready” }
-  return null;
+           <li>No new(Pointer) removes null/nil/0</li>
+          </ul>
+<pre>
+  <code>
+HelloWorld *helloWorld() {
+    return panic ? null : "hello world";
 }
-if (process()) {
-  doit();
+int main() {
+  const char *ret = helloWorld();
+  printf("%s", ret); // could boom
+  free(ret); // could boom
 }
-              </code>
-            </pre>
-          </span>
-
-        </section>
-
-        <section>
-          <h2>Tuff Constrains<br/></h2>
-          <span class="fragment">
+// pointers are unmanaged, no constructor no destructor
+// only pointers can be null
+  </code>
+</pre>
+          </section>
+          <section>
+            <h2>Finally Rust</h2>
             <pre>
-              <code class="hljs" data-trim contenteditable>
-function process() { return new Processor() }
-process()
+  <code>
+struct HelloWorld {
+  values: Vec<&amp;'static str>,
+  ok: bool
+}
+impl HelloWorld {
+  fn joined(&amp;self) -> String {
+    let mut ret = String::new();
+    for v in self.values.iter() {
+      ret.push_str(v);
+    }
+    return ret;
+  }
+}
+fn hello_world() -> HelloWorld {
+  return HelloWorld{
+    values: vec!["Hello", " ", "World"],
+    ok: true
+  };
+}
+fn main() {
+  print!("{}\n", hello_world().joined());
+}
+// need no constructor nor destructor nor
+// copy constructor for nested #[derive(Clone, Copy)]
+  </code>
+</pre>
+  </code>
+          </section>
+          <section>
+           <h2>Remove Exceptions</h2>
+           <pre>
+           <code>
+#include &lt;string.h&gt;
+#include &lt;stdexcept&gt;
+class HelloWorld {
+public:
+  int len;
+  char *ret;
+
+  HelloWorld(int len) : len(len), ret(static_cast&lt;char*&gt;(malloc(len+1))) {
+  }
+  HelloWorld(const HelloWorld &amp;hw) : len(hw.len),
+    ret(static_cast&lt;char*&gt;(malloc(hw.len+1))) {
+    memcpy(this-&lt;ret, hw.ret, len);
+  }
+  ~HelloWorld() {
+    printf("~HelloWorld\n");
+    free(ret);
+  }
+};
+HelloWorld layer2() {
+  HelloWorld layer2(13);
+  void *ptr = malloc(1000);
+  if (layer2.len == 13) {
+    throw std::invalid_argument("if the wild 13" );
+  }
+  // divide by zero????
+  free(ptr);
+  return layer2;
+}
+HelloWorld layer1() {
+  HelloWorld layer1(11);
+  layer2();
+  return layer1;
+}
+int main() {
+  try {
+    HelloWorld my(layer1());
+    printf("%s\n", my.ret);
+  }
+  catch (std::exception &amp;e) {
+    printf("%s\n", e.what());
+  }
+}
 </code>
-            </pre>
-Nobody owns or the scope is of “new Processor()” is unclear, in GC Processor lives for ever if it references it self…e.g. by a own thread              </code>
-          </span>
-
+</pre>
         </section>
 
         <section>
-          <h2>Tuff Constrains<br/>no exceptions</h2>
-          <span class="fragment">
-            <pre>
-              <code class="hljs" data-trim contenteditable>
-throw “This is wrong”
-              </code>
-            </pre>
-            or
-            <pre>
-              <code class="hljs" data-trim contenteditable>
-let a = 17;
-let b = 0;
-let c = a/b
-              </code>
-            </pre>
-            this is not handleable → panic
-        </span>
-
+          <h2>Tuff Constrains</h2>
+          <span class="fragment"> no new </span>
+          <span class="fragment"> no null </span>
+          <span class="fragment"> no exception </span>
+          <span class="fragment"> no constructor </span>
+          <span class="fragment"> no destructor </span>
         </section>
+
         <section>
           <h2>QED</h2>
           <span class="fragment">
         <h4>Programming still is possible</h4>
           </span>
           <span class="fragment">
-        <h4>There are no Memoryleaks, We could build a compiletime<br/>
+        <h4>There are no Memoryleaks, We could build at compiletime<br/>
             check of ownership, called Borrowchecker in Rust</h4>
       </span>
           <span class="fragment">
         <h4>There are hard panic's</h4>
       </span>
           <span class="fragment">
-        <h4>We Return always a Result Generic</h4>
+        <h4>No Null Idiom, We Return always a Result Generic</h4>
         <pre>
           <code class="hljs" data-trim contenteditable>
 let r : Result&lt;T, String&gt; = action();
@@ -254,7 +506,6 @@ match r {
       </section>
       <section>
         <h2>Complexity/Time</h2>
-
         <ul>
           <li>GC Bases 1</li>
           <li>NonGC C/C++ 10</li>
