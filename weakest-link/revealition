@@ -1,0 +1,13 @@
+#!/bin/sh
+mkdir -p target
+[ ! -d target/reveal.js ] && (cd target && git clone https://github.com/hakimel/reveal.js)
+[ -d target/reveal.js ] && (cd target/reveal.js && git reset --hard && git pull)
+
+for i in index.html images
+do
+  rm -f target/reveal.js/$i
+  (cd target/reveal.js && ln -s ../../$i $i)
+done
+
+echo "open file://$(pwd)/target/reveal.js/index.html"
+

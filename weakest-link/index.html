@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Weakest Link</title>
+
+  <meta name="description" content="The Weakest Link of a Trustchain">
+  <meta name="author" content="Meno Abels">
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="../../my.css" id="theme">
+
+  <!-- Code syntax highlighting -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+
+  <!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+</head>
+
+<body>
+
+  <div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+      <section>
+        <h1>weakest link</h1>
+      </section>
+
+      <section>
+        <h4>disclaimer</h4>
+        <small>
+this is only suitable for
+person with a
+internet addiction
+and the risk of watching
+cat pictures
+          </small>
+      </section>
+
+      <section
+        data-background-image="../../physical-keys.jpg"
+        >
+        <h2 style="color: #bbb">Why you Trust in your door Lock?</h2>
+      </section>
+
+
+      <section data-background-image="../../just-lock.jpg">
+        <h2 style="color: #ddd">Whats about these Locks?</h2>
+      </section>
+      <section data-background-image="../../firefox-bad-lock-background.png">
+        <h2 style="color: #ddd">Firefox Bad Lock</h2>
+<img src="../../firefox-bad-lock.png" />
+</section>
+      <section data-background-image="../../chrome-background.png">
+        <h2 style="color: #ddd">Chromes Green Lock</h2>
+<img src="../../chrome-green-lock.png" />
+</section>
+
+      <section data-background-image="../../safari-background.png">
+        <h2 style="color: #ddd">Safaries Green Lock</h2>
+<img src="../../safari-green-lock.png" />
+</section>
+
+<section data-background-image="../../firefox-background.png">
+  <h2 style="color: #ddd">Firefox Green Lock</h2>
+<img src="../../firefox-green-lock.png">
+</section>
+
+<section>
+  <h2>Are broken Locks less trustworthy?</h2>
+  <img src="../../firefox-bad-lock.png" />
+</section>
+
+    <section>
+      <h2>Even MOZILLA is not very confident in this locks</h2>
+<img src="../../firefox-confidents.png">
+    </section>
+
+    <section
+      data-background-image="../../copied-keys.jpg"
+      data-background-repeat="repeat"
+    >
+      <h2 style="color: #fff">
+What happens to your trust?
+<br/>
+If you know
+that there are copies
+of your door key.
+          </h2>
+    </section>
+
+      <section>
+        <h2>
+could we detect copies ?
+            </h2>
+      </section>
+
+      <section data-background-image="../../223baltip.jpg">
+        <h2 style="color: #eee">
+            PHYSICAL POSSIBLE<br/>
+            It's difficult <br/>
+            There are never 100% equal copies.
+          </h2>
+          <h5 style="color: #eee">
+            like the signature of
+            the bullet and the gun
+          </h5>
+      </section>
+
+      <section data-background-image="../../US-ASCII_code_chart.png">
+        <h2 style="color: #eee">
+            DIGITAL<br/>
+            has only 100% PERFECT copies.
+          </h2>
+      </section>
+      <section>
+        <h2>
+            PHYSICAL
+            COPIES
+            DO NOT SCALE
+            DIGITAL COPIES DOES!
+            </h2>
+      </section>
+      <section>
+        <h2>
+            DIGITAL
+            COPIES
+            ARE NOT DETECTABLE!
+            EVERY COPY IS PERFECT!
+
+          </h2>
+      </section>
+
+      <section>
+        <h2>
+            TLS-Inpersonation
+          </h2>
+
+      </section>
+      <section>
+        <h2>
+            DIGITAL-UNIVERSE
+            WE ARE
+            UNABLE
+            TO DETECT
+            A DIFFERENCE!
+          </h2>
+      </section>
+      <section>
+        <h2>
+            ARE
+            PRIVATE-KEYS
+            COPIED?
+          </h2>
+      </section>
+
+      <section>
+        <h2>
+            YES
+            GOOGLE.COM > 10^5
+            NETFLIX.COM > 10^5
+            AMAZON.COM > 1
+            FACEBOOK.COM > 10^5
+
+          </h2>
+      </section>
+
+      <section>
+        <h2>
+            TLS HANDSHAKE
+            LATENCY TIMING
+          </h2>
+      </section>
+
+      <section>
+        <h2>
+              IF ONLY ON COPY OF A KEY
+              EXISTS
+              T FROM DIFFERENTEN
+              PHYSICAL NETWORK LOCATIONS
+              should be FOLLOW
+              TLS HANDSHAKE LATENCY
+              T = dK * C
+
+            </h2>
+      </section>
+      <section>
+        <h2>
+             LaTENCY < DK*C
+             GOOGLE.COM
+             NETFLIX.COM
+             FACEBOOK.COM
+           </h2>
+      </section>
+
+      <section>
+        <h2>
+            AMAZON.COM
+            SEATLE
+            T = dT * C
+          </h2>
+      </section>
+
+      <section>
+        <h2>
+            QED
+            THERE ARE
+            COPIES OF
+            KEYS!
+          </h2>
+      </section>
+
+      <section>
+        <h2>
+          RISK MULTIPLICATION
+          Loose ONE KEY
+          99.9999%
+          99.9999^10^6=36.78%
+
+        </h2>
+      </section>
+      <section>
+        <h2>
+          THERE IS NO
+          RISK THAT THE OWNER OF THE PRIVATE KEY IS IDENTIFABLE
+          THAT HE HANDED OUT HIS PRIVATE KEY TO a 3RD-PARTY!
+        </h2>
+      </section>
+
+      <section>
+        <h2>
+          PERFECT FORWARD SECRECY
+          Protected AGAINS
+          WIRE-TAPPING
+        </h2>
+      </section>
+
+      <section>
+        <h2>
+            PFS
+            DOES NOTHING
+            ON
+            MAN-IN-MIDDLE
+            WITH
+            SHARED PRIVATE KEYS
+          </h2>
+      </section>
+
+      <section>
+        <h2>
+    CA - PKI Only ADDRESSES
+    ON PUBLICKEY’s AND
+    META DATA INTEGRITY
+  </h2>
+      </section>
+
+      <section>
+        <h2>
+
+    THE INTEGRITY OF THE PRIVATE KEY
+    IS UNTOUCHED
+    BY THE CA Infrastructure
+
+  </h2>
+      </section>
+
+      <section>
+        <h2>
+    THE WEAKESSLINK
+    is
+    THE PRIVATE KEY
+    of YOUR
+    COMMUNICATIONS
+    PARTNER
+
+  </h2>
+      </section>
+
+      <section>
+        <h2>
+    FOR TLS/CA
+    NOBODY
+    SEAMS TO WORK ON
+    THIS!
+  </h2>
+      </section>
+
+      <section>
+        <h2>
+    QUESTION:
+    IS THERE A SOLUTION
+    ON OUR CURRENT ASYNC KEY
+    IMPLEMENTATION?
+
+  </h2>
+      </section>
+
+      <section>
+        <h2>
+    PERSONAL
+    WE COULD
+    USE SMARTCARD
+    TO PROTECTED OUR
+    PERSONAL PRIVATE KEYS
+    FROM BEEN
+    COPIED
+
+  </h2>
+      </section>
+
+      <section>
+        <h2>
+    THX
+    @myLES @INGBEN @CRAMFORCE
+    THX
+    JSCONF
+    THX
+    AUDIENCE
+    SEEYA
+    @fastandfeARLESS
+    https://gitcom.com/mabels
+  </h2>
+      </section>
+
+
+    </div>
+
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+
+  <script>
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+
+      transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+      // Optional reveal.js plugins
+      dependencies: [{
+          src: 'lib/js/classList.js',
+          condition: function() {
+            return !document.body.classList;
+          }
+        },
+        {
+          src: 'plugin/markdown/marked.js',
+          condition: function() {
+            return !!document.querySelector('[data-markdown]');
+          }
+        },
+        {
+          src: 'plugin/markdown/markdown.js',
+          condition: function() {
+            return !!document.querySelector('[data-markdown]');
+          }
+        },
+        {
+          src: 'plugin/highlight/highlight.js',
+          async: true,
+          condition: function() {
+            return !!document.querySelector('pre code');
+          },
+          callback: function() {
+            hljs.initHighlightingOnLoad();
+          }
+        },
+        {
+          src: 'plugin/zoom-js/zoom.js',
+          async: true
+        },
+        {
+          src: 'plugin/notes/notes.js',
+          async: true
+        }
+      ]
+    });
+
+    Reveal.addEventListener('customevent', function() {
+      console.log('"customevent" has fired');
+    });
+  </script>
+
+</body>
+
+</html>
