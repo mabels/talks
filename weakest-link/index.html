@@ -71,11 +71,23 @@ Dark side of the Web.
 
 
       <section data-background-image="../../just-lock.jpg">
+        <p style="position:relative">
         <h2 style="color: #ddd">What about these locks?</h2>
+
+        <img class="fragment" style="position:absolute; left:500px; top:150px;"
+              src="../../firefox-bad-lock-screen.png" width="320"/>
+        <img class="fragment" style="position:absolute; left:100px; top:350px;"
+              src="../../firefox-green-lock-screen.png" width="320"/>
+        <img class="fragment" style="position:absolute; left:120px; top:100px;"
+              src="../../chrome-green-lock-screen.png" width="320"/>
+        <img class="fragment" style="position:absolute; left:460px; top:360px;"
+              src="../../safari-green-lock-screen.png" width="320"/>
+        </p>
       </section>
+      <!--
       <section data-background-image="../../firefox-bad-lock-background.png">
         <h2 style="color: #ddd">Firefox's Bad Lock</h2>
-<img src="../../firefox-bad-lock.png" />
+<img src="../../firefox-bad-lock.png" height="100"/>
 </section>
       <section data-background-image="../../chrome-background.png">
         <h2 style="color: #ddd">Chrome's Green Lock</h2>
@@ -90,7 +102,7 @@ Dark side of the Web.
 <section data-background-image="../../firefox-background.png">
   <h2 style="color: #ddd">Firefox's Green Lock</h2>
 <img src="../../firefox-green-lock.png">
-</section>
+</section> -->
 
 <section>
   <h2>Are broken Locks less trustworthy?</h2>
@@ -99,7 +111,7 @@ Dark side of the Web.
 
     <section data-background-image="../../Superman-Android-Desktop-Wallpapers.jpg">
       <h2 style="color: #eee; background-color:rgba(44,44,44,0.8);"
-       >Even Mozilla is not very confident in these locks</h2>
+       >Even Mozilla is not very confident about these locks</h2>
 <img src="../../firefox-confidents.png">
       <aside class="notes">
         conditional
@@ -161,18 +173,49 @@ Could we detect copies?
           </aside>
       </section>
 
-      <section data-background-color="black">
+<!--
+The possiblity of copying keys without traces
+breaks atleast my trust in almost every integrity
+of my communications partner.
+If a partner is able to copy or loose his key
+we could have this scenerio without the any possiblity
+to detect this.
+ -->
+      <!-- <section data-background-color="black">
         <h2>
             One Key TLS
         </h2>
         <img src="../../simple-tls.png" width="60%"/>
-      </section>
+      </section> -->
 
       <section data-background-color="black">
         <h2>
-            Copied Key TLS
+            Copied Key Scenerio
         </h2>
-        <img src="../../complex-tls.png" width="60%"/>
+
+        <div style="position:relative">
+        <img class="fragment"
+              style="position:absolute; left:100px; top:30px;"
+              src="../../me-shape.png" width="240"/>
+        <img class="fragment"
+              style="position:absolute; left:400px; top:160px;"
+              src="../../arrow-shape.png" width="240" />
+        <img class="fragment"
+              style="position:absolute; left:800px; top:30px;"
+              src="../../trusted-other-shape.png" width="240" />
+        <img class="fragment"
+              src="../../3rd-other-shape.png" width="240" />
+              <!-- style="position:absolute; left:400px; top:30px;" -->
+        <!-- <img class="fragment" style="position:absolute; left:100px; top:350px;"
+              src="../../firefox-green-lock-screen.png" width="320"/>
+        <img class="fragment" style="position:absolute; left:120px; top:100px;"
+              src="../../chrome-green-lock-screen.png" width="320"/>
+        <img class="fragment" style="position:absolute; left:460px; top:360px;"
+              src="../../safari-green-lock-screen.png" width="320"/> -->
+        </div>
+
+        <!-- <img src="../../complex-tls.png" width="60%"/>
+        k -->
   <aside class="notes">
     a broken lock could be more secure if you
     trust in that there is only one copy
@@ -221,10 +264,12 @@ Could we detect copies?
       </section>
       <section data-background-image="../../Internet_map_1024.jpg">
         <h2 style="color: #000; background: rgba(180, 180, 180, 0.9);">
-             t < (a-b) * c</br>
-             google.com</br>
-             facebook.com</br>
+          t < (a-b) * c</br>
         </h2>
+          <img src="../../t-less-d-c.png">
+          <div style="color: #000; background: rgba(180, 180, 180, 0.9);">
+          google.com and facebook.com
+        </div>
         <aside class="notes">
           if copies exist than there could be no single key in
           one physical location.
