@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>is-this-simple</title>
+
+    <meta name="description" content="is-this-simple">
+    <meta name="author" content="Meno Abels">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/sky.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <style>
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  text-transform: none;
+}
+    </style>
+
+
+    <!-- Printing and PDF exports -->
+    <script>
+var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>is this simple</h1>
+          <h3>distributed systems are complex</h3>
+        </section>
+
+        <section>
+          <h2>disclaimer</h2>
+          <ul>
+            <li>this will take around 60minute plus</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>disclaimer</h2>
+          <ul>
+            <li >i never held this before</li>
+          </ul>
+        </section>
+        <section>
+          <h2>disclaimer</h2>
+          <ul>
+            <li >i will use a stupid example</li>
+          </ul>
+        </section>
+        <section>
+          <h2>disclaimer</h2>
+          <ul>
+            <li >there will be alot javascript code</li>
+          </ul>
+        </section>
+        <section>
+          <h2>disclaimer</h2>
+          <ul>
+            <li >https://github.com/mabels/talks/is-this-simple</li>
+          </ul>
+        </section>
+        <section>
+          <h2>disclaimer</h2>
+          <ul>
+            <li >use
+              <ul>
+                <li>serverless framework running aws-lambda</li>
+                <li>redis from https://redislabs.com</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h2>disclaimer</h2>
+          <ul>
+            <li >question/interruptions are appreciate</li>
+          </ul>
+        </section>
+        <section>
+          <h2>disclaimer</h2>
+          <ul>
+            <li>this will be a series of talks</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Simple World</h2>
+          <pre>
+              <code class="hljs" data-trim contenteditable>
+                $ node -e "console.log('Hello World');"
+                Hello World
+              </code>
+          </pre>
+          <h4>that simple</h4>
+        </section>
+
+        <section>
+          <h3>Real World</h3>
+          <img src="../../real-world-hello-world.png">
+        </section>
+
+
+        <section>
+          <h2>Functional Expression</h2>
+          <pre>
+              <code class="hljs" data-trim contenteditable>
+                console.log(
+                  Initiator()
+                  .map(i =&gt; id2LetterMap(i))
+                  .reduce((e, v) =&gt; LetterReducer(e,v))
+                  .reduce((e, v) =&gt; ToString(e,v))
+                );
+              </code>
+          </pre>
+        </section>
+
+        <section>
+          <h2>Functional Expression(Initiator)</h2>
+          <pre>
+              <code class="hljs" data-trim contenteditable>
+                  function Initiator() {
+                    return [0,1,2,3,4,5,6,7,8,9,10,11]
+                      .sort(() =&gt; .5 - Math.random());
+                  }
+              </code>
+          </pre>
+        </section>
+
+        <section>
+          <h2>Functional Expression(id2LetterMap)</h2>
+          <pre>
+              <code class="hljs" data-trim contenteditable>
+                  function id2LetterMap(i) {
+                    return { idx: i, letter: "Hello World"[i] };
+                  }
+              </code>
+          </pre>
+          <h4>real work</h4>
+        </section>
+
+        <section>
+          <h2>Functional LetterReducer</h2>
+          <pre>
+              <code class="hljs" data-trim contenteditable>
+const LetterReducer = function(letterReducers) {
+  return function() {
+    for (let letter of Array.from(arguments).filter((i) =&gt; i.letter)) {
+      let ridx = ~~(letter.idx/4), lr = [];
+      if (letterReducers.has(ridx)) {
+        lr = letterReducers.get(ridx);
+      } else {
+        letterReducers.set(ridx, lr);
+      }
+      lr.push(letter);
+    }
+    return [...letterReducers.values()];
+  }
+}(new Map());
+              </code>
+          </pre>
+          <small>https://en.wikipedia.org/wiki/Monad_(functional_programming)</small>
+        </section>
+
+        <section>
+          <h2>Functional ToStringReducer</h2>
+          <pre>
+              <code class="hljs" data-trim contenteditable>
+const ToString = function(letters) {
+  return function() {
+    for (let l of Array.from(arguments).filter((i) =&gt; i[0].letter)) {
+      letters = letters.concat(l);
+    }
+    return letters.sort((a,b) =&gt; a.idx - b.idx)
+        .map(i =&gt; i.letter)
+        .join("")
+  }
+}(new Array());
+              </code>
+          </pre>
+          <small>letters is state!</small>
+        </section>
+
+        <section>
+          <h2>Functional World</h2>
+          <pre>
+              <code class="hljs" data-trim contenteditable>
+                $ node src/functional.js
+                Hello World
+              </code>
+          </pre>
+          <h4>that simple</h4>
+        </section>
+
+        <section>
+          <h2>Distributed with Serverless</h2>
+          <img src="../../real-world-hello-world.png">
+          <h4>every box should lambda function</h4>
+        </section>
+
+        <section>
+          <h2>Https Transaction</h2>
+          <img src="../../arrow.png" >
+        </section>
+
+          <section>
+            <h2>Serverless Initiator</h2>
+            <img src="../../initiator.png" height="100px"/>
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+module.exports.helloWorld = function(redisEndPoint) {
+    const totalLen = "Hello World".length;
+    for (let idx = 0; idx &lt; totalLen; ++idx) {
+      requestLambda('id2LetterMap', event, {
+        started: new Date().getTime(),
+        transaction: transaction,
+        idx: idx,
+        totalLen: totalLen
+      }, () =&gt; { /* fire and forget */ });
+    }
+}
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Serverless id2LetterMap</h2>
+            <img src="../../id2LetterMap.png" height="80px"/>
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+module.exports = function(_) {
+  return (event, context, callback) =&gt; {
+    let transaction = JSON.parse(event.body);
+    transaction.letter = "Hello World"[transaction.idx];
+    requestLambda('letterReducer', event, transaction, () =&gt; {
+      callback(null, {
+        statusCode: 200,
+        body: JSON.stringify(transaction)
+      });
+    });
+  }
+}
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Serverless letterReducer</h2>
+            <img src="../../letterReducer.png" height="100px"/>
+            <ul>
+              <li>will be called from every id2LetterMap<br />
+                requestLambda('LetterReducer', ...)
+              </li>
+              <li class="fragment">with { transaction: x, letter: y, idx: i }</li>
+              <li class="fragment">collects until every letter segment is full<br />
+                than requestLambda('ToStringReducer', ...)<br />
+                { transaction: x, segment: s, <br />
+                letters: [ {letter: y1, idx: i1}, ...] }
+            </ul>
+          </section>
+          <section>
+            <h2>Serverless letterReducer</h2>
+            <img src="../../letterReducer.png" height="100px"/>
+            <ul>
+              <li>every request of the letterReducer needs information about
+                all previously happend letterReducer calls from this transaction</li>
+              <li class="fragment">lambda's does not provide any context neither state</li>
+              <li class="fragment">we need to put the collected segments of letters somewhere else</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Serverless letterReducer</h2>
+            <img src="../../letterReducer.png" height="100px" />
+            <ul>
+              <li>what data we want to put else where:
+                <pre>
+              <code class="hljs" data-trim contenteditable>
+                { transaction: t,
+                  segment: s,
+                  letters: [ {letter: y1, idx: i1},... ] }
+               </code>
+                </pre>
+              </li>
+              <li class="fragment">looks like we need a database:
+                <pre>
+              <code class="hljs" data-trim contenteditable>
+               create table letterReducer (
+                transaction VARCHAR, segment NUMBER,
+                idx NUMBER, letter CHAR
+                CONSTRAINT lr_pkey PRIMARY
+                KEY(transaction, segment, idx))
+               </code>
+                </pre>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h2>Serverless letterReducer</h2>
+            <img src="../../letterReducer.png" height="100px" />
+            <ul>
+              <li>How long we will store this?
+                <ul class="fragment">
+                  <li>less than one second</li>
+                  <li>should be fast!</li>
+                </ul>
+              </li>
+              <li class="fragment">are there any serverless services?
+                <ul class="fragment">
+                  <li>RDS SQL(preallocation,vpc)</li>
+                  <li>ElasticCache(preallocation, vpc)</li>
+                  <li>DyamoDB(slow write performance &gt; 500msec)</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h2>Serverless letterReducer</h2>
+            <img src="../../letterReducer.png" height="100px" />
+            <ul>
+              <li>ElasticCache is redis (aws needs a vpc)</li>
+              <li class="fragment">is the are free redis service?
+                <ul class="fragment">
+                  <li>https://redislabs.com</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h2>quick intro to redis</h2>
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+$ telnet redis 10923
+Trying 123.134.15.16...
+Connected to redis
+Escape character is '^]'.
+SADD key val1
+:1
+SADD key val2
+:1
+SMEMBERS key
+*4
+$4
+val2
+$4
+val1
+</code>
+            </pre>
+          </section>
+
+          <section>
+            <h2>Serverless letterReducer</h2>
+            <pre style="width:100%">
+              <code class="hljs" data-trim contenteditable>
+module.exports = function(redisEndPoint) {
+  return (event, context, callback) =&gt; {
+    let trans = JSON.parse(event.body);
+    trans.segment = ~~(trans.idx/4);
+    transaction.segmentSize = segmentSize(transaction, 4);
+    const my = redisEndPoint();
+    const key = `letterReducer-${trans.transaction}-${trans.segment}`;
+    my.sadd(key, JSON.stringify({ idx: trans.idx, letter: trans.letter }));
+    my.smembers(key, function(err, replies) {
+      if (replies.length &lt; trans.segmentSize) {
+        my.end(true);
+        complete(trans, replies, callback);
+      } else {
+        trans.letters = replies.map(i =&gt; JSON.parse(i));
+        requestLambda('toStringReducer', event, trans, () =&gt; {
+          my.del(key);
+          my.end(true);
+          complete(trans, replies, callback);
+        });
+      }
+    });
+  }
+}
+              </code>
+            </pre>
+            <small>was not too much</small>
+          </section>
+
+          <section>
+            <h2>Serverless toStringReducer</h2>
+            <img src="../../toStringReducer.png" height="100px"/>
+            <ul>
+              <li>will be called for every segment of letterReducer<br />
+                requestLambda('toStringReducer', ...)
+              </li>
+              <li class="fragment">with { transaction: x, segment: s, <br />
+                letters: [{letter: l, idx: i}...] }</li>
+              <li class="fragment">collects until all letters of all segments received</li>
+            </ul>
+          </section>
+          <section>
+            <img style="margin: 0;" src="../../toStringReducer.png" height="100px"/>
+            <pre style="margin: 0; width:100%">
+              <code class="hljs" data-trim contenteditable data-noescape>
+module.exports = function(redisEndPoint) {
+  return (event, context, callback) =&gt; {
+    let transaction = JSON.parse(event.body);
+    const my = redisEndPoint();
+    const key = `toStringReducer-${transaction.transaction}`;
+    my.sadd(key, JSON.stringify(transaction.letters));
+    my.smembers(key, (err, replies) =&gt; {
+      <mark>transaction.string = replies.map((i) =&gt; JSON.parse(i))
+        .reduce((flat, toFlatten) =&gt; flat.concat(toFlatten), [])
+        .sort((a,b) =&gt; a.idx - b.idx)
+        .map(a =&gt; a.letter).join("");</mark>
+      if (transaction.string.length &lt; transaction.totalLen) {
+        my.end(true);
+        complete(transaction, callback);
+      } else {
+        my.publish(`helloWorld-${transaction.transaction}`, 
+          JSON.stringify(transaction));
+        my.del(key)
+        my.end(true);
+        complete(transaction, callback);
+      }
+    });
+  }
+}
+              </code>
+            </pre>
+            <small>where the result should go</small>
+          </section>
+
+          <section>
+            <h2>Return the Result</h2>
+            <img src="../../returnTheResult.png" />
+          </section>
+
+          <section>
+            <h2>Return the Result with Poll</h2>
+            <ul>
+              <li>helloWorld will constantly ask redis<br />
+                  key: `helloWorld-${transaction.transaction}`
+              </li>
+              <li class="fragment">wasting cpu in lambda</li>
+              <li class="fragment">wasting cpu in redis</li>
+              <li class="fragment">wasting bandwidth lambda-redis</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>No Polling Return the Result</h2>
+            <ul>
+              <li>helloWorld will register a subscriber on key<br />
+                  <pre style="width: 100%">
+              <code class="hljs" data-trim contenteditable data-noescape>
+    const my = redisEndPoint();
+    const key = `helloWorld-${transaction}`;
+    my.on("message", function(channel, jsonMessage) {
+      let message = JSON.parse(jsonMessage);
+      message.ended = new Date().getTime();
+      message.duraction = message.ended - message.started;
+      my.unsubscribe(transaction);
+      my.end(true);
+      callback(null, {
+        statusCode: 200,
+        body: JSON.stringify(message, null, 2)
+      });
+    });
+    my.subscribe(key);
+                  </code></pre>
+              </li>
+            </ul>
+            <small>redis to the rescue</small>
+          </section>
+          <section>
+            <h2>Publish the Result</h2>
+            <ul>
+              <li>toStringReducer will publish on key<br />
+                  <pre style="width: 100%">
+              <code class="hljs" data-trim contenteditable data-noescape>
+module.exports = function(redisEndPoint) {
+  return (event, context, callback) =&gt; {
+    let transaction = JSON.parse(event.body);
+    const my = redisEndPoint();
+    const key = `toStringReducer-${transaction.transaction}`;
+    my.sadd(key, JSON.stringify(transaction.letters));
+    my.smembers(key, (err, replies) =&gt; {
+      transaction.string = replies.map((i) =&gt; JSON.parse(i))
+        .reduce((flat, toFlatten) =&gt; flat.concat(toFlatten), [])
+        .sort((a,b) =&gt; a.idx - b.idx)
+        .map(a =&gt; a.letter).join("");
+      if (transaction.string.length &lt; transaction.totalLen) {
+        my.end(true);
+        complete(transaction, callback);
+      } else {
+        <mark>my.publish(`helloWorld-${transaction.transaction}`, 
+          JSON.stringify(transaction));</mark>
+        my.del(key)
+        my.end(true);
+        complete(transaction, callback);
+      }
+    });
+  }
+              </code></pre>
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Return the Result with Pub/Sub</h2>
+            <img src="../../returnTheResultPubSub.png" />
+          </section>
+
+          <section>
+            <h2>Serverless<img src="../../serverless.png" width="150px"/> HelloWorld</h2>
+            <div style="display: flex">
+              <div>
+            <ul>
+              <li>aws account</li>
+              <li>redis server</li>
+              <li>npm install -g serverless</li>
+              <li>serverless.yaml</li> 
+              <li>serverless deploy</li>
+            </ul>
+             <pre><code class="hljs" data-trim contenteditable >
+                $ curl https://.../helloWorld
+                { ....
+                  "string": "Hello World"
+                }
+              </code></pre>
+            </div>
+            <pre width="100%" style="flex: 1;">
+              <code class="hljs" data-trim contenteditable >
+---
+service: serverless-hello-world
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: eu-west-1
+  memorySize: 128
+functions:
+  helloWorld:
+    handler: handler.helloWorld
+    events:
+      - http:
+          path: helloWorld
+          method: get
+  id2LetterMap:
+    handler: handler.id2LetterMap
+    events:
+      - http:
+          path: id2LetterMap
+          method: post
+  letterReducer:
+    handler: handler.letterReducer
+    events:
+      - http:
+          path: letterReducer
+          method: post
+  toStringReducer:
+    handler: handler.toStringReducer
+    events:
+      - http:
+          path: toStringReducer
+          method: post
+                  </code>
+                </pre>
+            </div>
+          </section>
+
+          <section>
+            <h2>Sessions learning</h2>
+            <ul>
+              <li>HTTP is a directed Communication</li>
+              <li class="fragment">State should be stored outside the lambda</li>
+              <li class="fragment">State is something like a database</li>
+              <li class="fragment">State could shortliving</li>
+              <li class="fragment">State should have transactions sadd/smembers</li>
+              <li class="fragment">Redis is fast and easy</li>
+              <li class="fragment">Pub-Sub could be used for directed Communication</li>
+              <li class="fragment">Http has Request and Respond!</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Outlook</h2>
+            <ul>
+              <li>What is a Messaging Service</li>
+              <li class="fragment">What is a Queue</li>
+              <li class="fragment">What is Nameing Service</li>
+              <li class="fragment">What is Configuration Managment</li>
+              <li class="fragment">What is a Registration Service</li>
+              <li class="fragment">What are Distributed Transactions</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Thx<br/>for your patience</h2>
+            <h5>@fastandfearless</h5>
+            <h5>https://github.com/mabels/talks</h5>
+          </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+// Full list of configuration options available at:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+  controls: true,
+  progress: true,
+  history: true,
+  center: true,
+  transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+  // Optional reveal.js plugins
+  dependencies: [
+    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+    { src: 'plugin/zoom-js/zoom.js', async: true },
+    { src: 'plugin/notes/notes.js', async: true }
+  ]
+});
+
+Reveal.addEventListener( 'customevent', function() {
+  console.log( '"customevent" has fired' );
+} );
+
+    </script>
+
+  </body>
+</html>
