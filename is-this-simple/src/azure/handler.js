@@ -1,16 +1,9 @@
 'use strict';
-if (!process.env.APP_POOL_ID) {
-  process.env.NODE_PATH = `${__dirname}/node_modules`;
-  require('module').Module._initPaths();
-  console.log("added NODE_PATH", process.env.NODE_PATH)
-}
-
 
 const redis = require('redis');
 const dns = require('dns');
-const handler_path = process.env.APP_POOL_ID ? "./handler/" : "../handler/";
-const redisEndPointData = require(process.env.APP_POOL_ID ? "./redis.lab" : "../redis.lab");
-const requestLambda = require(process.env.APP_POOL_ID ? './requestLambda' : "../requestLambda");
+const redisEndPointData = require("../redis.lab");
+const requestLambda = require("../requestLambda");
 const redisEndPoint = function() {
   //console.log("redisEndPoint:", redisEndPointData);
   return redis.createClient(redisEndPointData.port, redisEndPointData.host);
@@ -22,9 +15,17 @@ dns.resolve(redisEndPointData.host, (e,r) =>{
   }
 });
 
-['env', 'helloWorld', 'toStringReducer', 'id2LetterMap', 'letterReducer'].forEach((mod) => {
+const mods = {
+'env': require('../handler/env'),
+'helloWorld': require('../handler/helloWorld'),
+'toStringReducer': require('../handler/toStringReducer'),
+'id2LetterMap': require('../handler/id2LetterMap'),
+'letterReducer': require('../handler/letterReducer')
+};
+
+for (let mod in mods) {
   //console.log(`[${handler_path}${mod}]`, process.env.APP_POOL_ID);
-  const rmod = require(`${handler_path}${mod}`)({
+  const rmod = mods[mod]({
     redisEndPoint: redisEndPoint,
     requestLambda: requestLambda
   });
@@ -46,7 +47,7 @@ dns.resolve(redisEndPointData.host, (e,r) =>{
       context.done();
     });
   }
-});
+}
 
 
 

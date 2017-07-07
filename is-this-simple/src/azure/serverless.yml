@@ -23,6 +23,7 @@ provider:
 
 plugins:
   - serverless-azure-functions
+  - serverless-webpack
 
 package:
   exclude:
