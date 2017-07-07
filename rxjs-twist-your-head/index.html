@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>twist your head</title>
+
+		<meta name="description" content="reactive state representation">
+		<meta name="author" content="Meno Abels">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>twist your head</h1>
+					<h3>where is state gone?</h3>
+				</section>
+
+				<section>
+					<h2>we have no time!</h2>
+					<ul>
+            <li>i’m a software developer(hacker)</li>
+            <li>i’m an admin</li>
+            <li>i’m a dev’op</li>
+					</ul>
+				</section>
+
+        <section>
+          <h2>It's all about state!</h2>
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+                let state = {
+                  be: "nice", 
+                  inclusive: true 
+                }
+              </code>
+            </pre>
+        </section>
+        <section>
+          <h3>static state</h3>
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+                if (state.be == "nice") {
+                  console.log("hello world");
+                }
+              </code>
+            </pre>
+        </section>
+
+
+				<section>
+					<h2>Poll abstraction Everywhere</h2>
+            <pre>
+              <code class="hljs" data-trim contenteditable>
+                let prevState = state; // implicit state
+                setInterval(() => {
+                  if (prevState.be != state.be) {
+                    switch (state.be) { 
+                      case "nice": spent = "love"; break;
+                      default: spent = "respect"; break;
+                    }
+                  }
+                }, 1000);
+              </code>
+            </pre>
+				</section>
+
+				<section>
+					<h2>Where we use Poll-Pattern</h2>
+          <ul>
+          <li>think on sql</li>
+          <li>typical api's</li>
+          <li>serialization point in time serialization</li>
+          </ul>
+        </section>
+
+				<section>
+					<h2>Reset Your view on State</h2>
+          <h3>state is the composition of change over time</h3>
+				</section>
+				<section>
+					<h2>Reactive-Functional-Way</h2>
+          <pre>
+              <code class="hljs" data-trim contenteditable>
+                let beValue = "nice";
+                let inclusiveValue = true;
+                let be = Rx.Observable.create((observer) {
+                    observer.next(beValue);
+                    observer.complete();
+                  }),
+                let inclusive = Rx.Observable.create((observer) {
+                    observer.next(inclusiveValue);
+                    observer.complete();
+                  }
+                let state = Rx.Observable.combineLatest(be, inclusive)
+              </code>
+          </pre>
+				</section>
+				<section>
+          <h3>every attribute is a Stream of there Change</h3>
+				</section>
+
+				<section>
+					<h2>What does these mean?</h2>
+          <img src="../../combineLatest.png" />
+				</section>
+
+        <section>
+          <h2>Thx</h2>
+        </section>
+
+        <section>
+          <h2>Reset,Restart,Reactive</h2>
+          <h2>First identify state</h2>
+        </section>
+        <section>
+          <h3>Is CSS is a static state representation?</h3>
+        </section>
+        <section>
+          <h3>HTML is a static state representation?</h3>
+        </section>
+        <section>
+          <h3>JSON is a static state representation?</h3>
+        </section>
+        <section>
+          <h3>static state is everywhere!</h3>
+        </section>
+        <section>
+          <h3>If you going to build Chimera</h3>
+          <img src="../../Chimera_Apulia_Louvre_K362.jpg" />
+        </section>
+        <section>
+          <h3>Protip: avoid it</h3>
+        </section>
+        <section>
+          <h2>More On!</h2>
+          <h3>Help full explore cycle.js/recycle.js</h3>
+        </section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+      Reveal.addEventListener( 'customevent', function() {
+          console.log( '"customevent" has fired' );
+      } );
+
+		</script>
+
+	</body>
+</html>

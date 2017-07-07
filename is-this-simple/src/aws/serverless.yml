@@ -14,12 +14,27 @@ provider:
   stage: dev
   region: eu-west-1
   memorySize: 128
-  environment:
-    RedisHost: ${file(./redis.lab.yml):host}
-    RedisPort: ${file(./redis.lab.yml):port}
-  #  vpc:
+  #environment:
+  #  RedisHost: ${file(./redis.lab.yml):host}
+  #  RedisPort: ${file(./redis.lab.yml):port}
+  #vpc:
   #  securityGroupIds: [ "sg-5f599127" ]
   #  subnetIds: [ "subnet-54b9121d", "subnet-3c32905b", "subnet-32729c69" ]
+
+package:
+  exclude:
+    - node_modules/**
+    - .gitignore
+    - .git/**
+  include:
+    - ../handler/*js
+    - ../requestLambda.js
+    - ../redis.lab.js
+    - node_modules/double-ended-queue/**
+    - node_modules/redis/**
+    - node_modules/redis-commands/**
+    - node_modules/redis-parser/**
+    - node_modules/uuid/**
 
 functions:
   env:

@@ -1,10 +1,8 @@
-const redis = require('redis');
-const requestLambda = require('./requestLambda.js');
 const uuid = require('uuid');
 
-module.exports = function(redisEndPoint) {
-  return (event, context, callback) => {
-    const my = redisEndPoint();
+module.exports = function(mods) {
+  return (data, attr, callback) => {
+    const my = mods.redisEndPoint();
     const transaction = uuid.v1();
     const key = `helloWorld-${transaction}`;
     my.on("message", function(channel, jsonMessage) {
@@ -15,17 +13,14 @@ module.exports = function(redisEndPoint) {
         message.duraction = message.ended - message.started;
         my.unsubscribe(transaction);
         my.end(true);
-        callback(null, {
-          statusCode: 200,
-          body: JSON.stringify(message, null, 2)
-        });
+        callback(message);
       }
     });
     my.subscribe(key);
 
     const totalLen = "Hello World".length;
     for (let idx = 0; idx < totalLen; ++idx) {
-      requestLambda('id2LetterMap', event, {
+      mods.requestLambda('id2LetterMap', attr, {
         started: new Date().getTime(),
         transaction: transaction,
         idx: idx,

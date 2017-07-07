@@ -1,17 +1,6 @@
-const redis = require('redis');
-const requestLambda = require('./requestLambda.js');
-
-function complete(transaction, callback) {
-  callback(null, {
-    statusCode: 200,
-    body: JSON.stringify(transaction)
-  });
-}
-
-module.exports = function(redisEndPoint) {
-  return (event, context, callback) => {
-    let transaction = JSON.parse(event.body);
-    const my = redisEndPoint();
+module.exports = function(mods) {
+  return (transaction, attr, callback) => {
+    const my = mods.redisEndPoint();
     const key = `toStringReducer-${transaction.transaction}`;
     my.sadd(key, JSON.stringify(transaction.letters));
     my.smembers(key, (err, replies) => {
@@ -20,12 +9,12 @@ module.exports = function(redisEndPoint) {
         .sort((a,b) => a.idx - b.idx).map(a => a.letter).join("")
       if (transaction.string.length < transaction.totalLen) {
         my.end(true);
-        complete(transaction, callback);
+        callback(transaction);
       } else {
         my.publish(`helloWorld-${transaction.transaction}`, JSON.stringify(transaction));
         my.del(key)
         my.end(true);
-        complete(transaction, callback);
+        callback(transaction);
       }
     });
   }

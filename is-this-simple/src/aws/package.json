@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "uuid": "^2.0.3",
-    "redis": "^2.7.1"
+    "redis": "^2.7.1",
+    "uuid": "^2.0.3"
   }
 }

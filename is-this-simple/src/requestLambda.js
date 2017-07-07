@@ -1,10 +1,10 @@
 const https = require('https');
 
-module.exports = (action, event, transaction, cb) => {
+module.exports = (action, attr, transaction, cb) => {
   const options = {
-    host: event.headers.Host,
-    port: 443,
-    path: `/dev/${action}`,
+    host: attr.lambdaAdr.host,
+    port: attr.lambdaAdr.port,
+    path: `${attr.lambdaAdr.basePath}${action}`,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
