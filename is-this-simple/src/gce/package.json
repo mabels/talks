@@ -8,8 +8,10 @@
   },
   "author": "serverless.com",
   "license": "MIT",
+  "devDependencies": {
+    "serverless-google-cloudfunctions": "^1.1.0"
+  },
   "dependencies": {
-    "serverless-google-cloudfunctions": "^1.1.0",
     "uuid": "^2.0.3",
     "redis": "^2.7.1"
   }
