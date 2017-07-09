@@ -11,7 +11,7 @@ module.exports = (action, attr, transaction, cb) => {
     }
   };
   //attr.context.log("requestLambda:", options);
-  var req = https.request(options, function (res) {
+  const req = https.request(options, function (res) {
     let reqData = ""
     res.on('data', function (data) { reqData += data });
     res.on('end', function () { cb(null, reqData); });
