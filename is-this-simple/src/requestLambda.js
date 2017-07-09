@@ -10,6 +10,7 @@ module.exports = (action, attr, transaction, cb) => {
       'Content-Type': 'application/json'
     }
   };
+  //attr.context.log("requestLambda:", options);
   var req = https.request(options, function (res) {
     let reqData = ""
     res.on('data', function (data) { reqData += data });

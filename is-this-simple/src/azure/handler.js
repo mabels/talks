@@ -1,9 +1,18 @@
 'use strict';
 
+if (!process.env.APP_POOL_ID) {
+  process.env.NODE_PATH = `${__dirname}/node_modules`;
+  require('module').Module._initPaths();
+  console.log("added NODE_PATH", process.env.NODE_PATH)
+}
+
 const redis = require('redis');
 const dns = require('dns');
-const redisEndPointData = require("./redis.lab.js");
-const requestLambda = require("./requestLambda.js");
+const url = require('url');
+const path = require('path');
+const base = process.env.APP_POOL_ID ? "./" : "../";
+const redisEndPointData = require(`${base}redis.lab`);
+const requestLambda = require(`${base}requestLambda`);
 const redisEndPoint = function() {
   //console.log("redisEndPoint:", redisEndPointData);
   return redis.createClient(redisEndPointData.port, redisEndPointData.host);
@@ -15,27 +24,22 @@ dns.resolve(redisEndPointData.host, (e,r) =>{
   }
 });
 
-const mods = {
-'env': require('./handler/env.js'),
-'helloWorld': require('./handler/helloWorld.js'),
-'toStringReducer': require('./handler/toStringReducer.js'),
-'id2LetterMap': require('./handler/id2LetterMap.js'),
-'letterReducer': require('./handler/letterReducer.js')
-};
-
-for (let mod in mods) {
-  //console.log(`[${handler_path}${mod}]`, process.env.APP_POOL_ID);
-  const rmod = mods[mod]({
+['env', 'helloWorld', 'toStringReducer', 'id2LetterMap', 'letterReducer'].forEach((mod) => {
+  const rmod = require(`${base}handler/${mod}`)({
     redisEndPoint: redisEndPoint,
     requestLambda: requestLambda
   });
   exports[mod] = (context) => {
-    let jsonBody = context.req.body
+    const jsonBody = context.req.body
+    const myurl = url.parse(context.req.originalUrl);
     rmod(jsonBody, {
       lambdaAdr: {
-        host: context.req.headers,
+        //https://us-central1-vibrant-mantis-723.cloudfunctions.net/helloWorld
+        //host: 'us-central1-vibrant-mantis-723.cloudfunctions.net',
+        host: myurl.hostname,
         port: 443,
-        basePath: context.req.originalUrl
+        basePath: path.dirname(myurl.pathname)+'/'
+        //basePath: '/'
       }
     }, (data) => {
       context.res = {
@@ -47,7 +51,7 @@ for (let mod in mods) {
       context.done();
     });
   }
-}
+});
 
 
 

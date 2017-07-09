@@ -77,7 +77,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <section>
           <h2>disclaimer</h2>
           <ul>
-            <li >there will be alot javascript code</li>
+            <li >there will be a lot of javascript code</li>
           </ul>
         </section>
         <section>
@@ -91,7 +91,12 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
           <ul>
             <li >use
               <ul>
-                <li>serverless framework running aws-lambda</li>
+                <li>serverless framework running:</li>
+                  <ul>
+                    <li>aws-lambda</li>
+                    <li>gce-lambda</li>
+                    <li>azure-lambda</li>
+                  </ul>
                 <li>redis from https://redislabs.com</li>
               </ul>
             </li>
@@ -100,13 +105,13 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         <section>
           <h2>disclaimer</h2>
           <ul>
-            <li >question/interruptions are appreciate</li>
+            <li >question/interruptions are appreciated</li>
           </ul>
         </section>
         <section>
           <h2>disclaimer</h2>
           <ul>
-            <li>this will be a series of talks</li>
+            <li>this will be the first of a series of talks</li>
           </ul>
         </section>
 
@@ -118,7 +123,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
                 Hello World
               </code>
           </pre>
-          <h4>that simple</h4>
+          <h4>that's simple</h4>
         </section>
 
         <section>
@@ -215,13 +220,13 @@ const ToString = function(letters) {
                 Hello World
               </code>
           </pre>
-          <h4>that simple</h4>
+          <h4>that's simple</h4>
         </section>
 
         <section>
           <h2>Distributed with Serverless</h2>
           <img src="../../real-world-hello-world.png">
-          <h4>every box should lambda function</h4>
+          <h4>every box should be a lambda function</h4>
         </section>
 
         <section>
@@ -279,7 +284,7 @@ module.exports = function(_) {
               </li>
               <li class="fragment">with { transaction: x, letter: y, idx: i }</li>
               <li class="fragment">collects until every letter segment is full<br />
-                than requestLambda('ToStringReducer', ...)<br />
+                then requestLambda('ToStringReducer', ...)<br />
                 { transaction: x, segment: s, <br />
                 letters: [ {letter: y1, idx: i1}, ...] }
             </ul>
@@ -289,8 +294,8 @@ module.exports = function(_) {
             <img src="../../letterReducer.png" height="100px"/>
             <ul>
               <li>every request of the letterReducer needs information about
-                all previously happend letterReducer calls from this transaction</li>
-              <li class="fragment">lambda's does not provide any context neither state</li>
+                all previously happened letterReducer calls from this transaction</li>
+              <li class="fragment">lambdas do not provide any context nor state</li>
               <li class="fragment">we need to put the collected segments of letters somewhere else</li>
             </ul>
           </section>
@@ -298,7 +303,7 @@ module.exports = function(_) {
             <h2>Serverless letterReducer</h2>
             <img src="../../letterReducer.png" height="100px" />
             <ul>
-              <li>what data we want to put else where:
+              <li>what data we want to put elsewhere:
                 <pre>
               <code class="hljs" data-trim contenteditable>
                 { transaction: t,
@@ -324,7 +329,7 @@ module.exports = function(_) {
             <h2>Serverless letterReducer</h2>
             <img src="../../letterReducer.png" height="100px" />
             <ul>
-              <li>How long we will store this?
+              <li>How long will we store this?
                 <ul class="fragment">
                   <li>less than one second</li>
                   <li>should be fast!</li>
@@ -344,7 +349,7 @@ module.exports = function(_) {
             <img src="../../letterReducer.png" height="100px" />
             <ul>
               <li>ElasticCache is redis (aws needs a vpc)</li>
-              <li class="fragment">is the are free redis service?
+              <li class="fragment">is there a free redis service?
                 <ul class="fragment">
                   <li>https://redislabs.com</li>
                 </ul>
@@ -414,7 +419,7 @@ module.exports = function(redisEndPoint) {
               </li>
               <li class="fragment">with { transaction: x, segment: s, <br />
                 letters: [{letter: l, idx: i}...] }</li>
-              <li class="fragment">collects until all letters of all segments received</li>
+              <li class="fragment">collects until all letters of all segments are received</li>
             </ul>
           </section>
           <section>
@@ -447,7 +452,7 @@ module.exports = function(redisEndPoint) {
 }
               </code>
             </pre>
-            <small>where the result should go</small>
+            <small>where should the result go?</small>
           </section>
 
           <section>
@@ -456,7 +461,7 @@ module.exports = function(redisEndPoint) {
           </section>
 
           <section>
-            <h2>Return the Result with Poll</h2>
+            <h2>Return the Result with Polling</h2>
             <ul>
               <li>helloWorld will constantly ask redis<br />
                   key: `helloWorld-${transaction.transaction}`
@@ -468,7 +473,7 @@ module.exports = function(redisEndPoint) {
           </section>
 
           <section>
-            <h2>No Polling Return the Result</h2>
+            <h2>Return the Result w/o Polling</h2>
             <ul>
               <li>helloWorld will register a subscriber on key<br />
                   <pre style="width: 100%">
@@ -495,7 +500,7 @@ module.exports = function(redisEndPoint) {
           <section>
             <h2>Publish the Result</h2>
             <ul>
-              <li>toStringReducer will publish on key<br />
+              <li>toStringReducer will publish the result on key<br />
                   <pre style="width: 100%">
               <code class="hljs" data-trim contenteditable data-noescape>
 module.exports = function(redisEndPoint) {
@@ -532,7 +537,7 @@ module.exports = function(redisEndPoint) {
           </section>
 
           <section>
-            <h2>Serverless<img src="../../serverless.png" width="150px"/> HelloWorld</h2>
+            <h2>AWS <img src="../../serverless.png" width="150px"/> HelloWorld</h2>
             <div style="display: flex">
               <div>
             <ul>
@@ -590,12 +595,83 @@ functions:
           </section>
 
           <section>
-            <h2>Sessions learning</h2>
+            <h2>GCLOUD <img src="../../serverless.png" width="150px"/> HelloWorld</h2>
+            <div style="display: flex">
+              <div>
+            <ul>
+              <li>gcloud account</li>
+              <li>redis server</li>
+              <li>npm install -g serverless</li>
+              <li>serverless.yaml</li> 
+              <li>serverless deploy</li>
+            </ul>
+             <pre><code class="hljs" data-trim contenteditable >
+                $ curl https://.../helloWorld
+                { ....
+                  "string": "Hello World"
+                }
+              </code></pre>
+            </div>
+            <pre width="100%" style="flex: 1;">
+              <code class="hljs" data-trim contenteditable >
+service: serverless-hello-world
+
+provider:
+  name: google
+  runtime: nodejs
+  project: vibrant-mantis-723
+  credentials: ~/.gcloud/keyfile.json
+  #region: eu-west-1
+  memorySize: 128
+
+plugins:
+  - serverless-google-cloudfunctions
+
+package:
+  exclude:
+    - node_modules/**
+    - package-lock.json
+    - .gitignore
+    - .git/**
+  include:
+    - ../handler/*js
+    - ../requestLambda.js
+    - ../redis.lab.js
+
+functions:
+  env:
+    handler: env
+    events:
+      - http: path
+  helloWorld:
+    handler: helloWorld
+    events:
+      - http: path
+  id2LetterMap:
+    handler: id2LetterMap
+    events:
+      - http: path
+  letterReducer:
+    handler: letterReducer
+    events:
+      - http: path
+  toStringReducer:
+    handler: toStringReducer
+    events:
+      - http: path
+
+                  </code>
+                </pre>
+            </div>
+          </section>
+
+          <section>
+            <h2>Session's learning</h2>
             <ul>
               <li>HTTP is a directed Communication</li>
               <li class="fragment">State should be stored outside the lambda</li>
               <li class="fragment">State is something like a database</li>
-              <li class="fragment">State could shortliving</li>
+              <li class="fragment">State can be short-living</li>
               <li class="fragment">State should have transactions sadd/smembers</li>
               <li class="fragment">Redis is fast and easy</li>
               <li class="fragment">Pub-Sub could be used for directed Communication</li>
@@ -607,8 +683,8 @@ functions:
             <ul>
               <li>What is a Messaging Service</li>
               <li class="fragment">What is a Queue</li>
-              <li class="fragment">What is Nameing Service</li>
-              <li class="fragment">What is Configuration Managment</li>
+              <li class="fragment">What is a Naming Service</li>
+              <li class="fragment">What is a Configuration Managment</li>
               <li class="fragment">What is a Registration Service</li>
               <li class="fragment">What are Distributed Transactions</li>
             </ul>
