@@ -28,6 +28,22 @@
 .reveal h6 {
   text-transform: none;
 }
+body {
+  background: #181230;
+  background: -moz-radial-gradient(center, circle cover, #f7fbfc 0%, #181230 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #f7fbfc), color-stop(100%, #181230));
+  background: -webkit-radial-gradient(center, circle cover, #f7fbfc 0%, #181230 100%);
+  background: -o-radial-gradient(center, circle cover, #f7fbfc 0%, #181230 100%);
+  background: -ms-radial-gradient(center, circle cover, #f7fbfc 0%, #181230 100%);
+  background: radial-gradient(center, circle cover, #f7fbfc 0%, #181230 100%);
+  background-color: #f7fbfc; 
+}
+.reveal pre {
+  box-shadow: 0px 0px 0.01em rgba(0, 0, 0, 0.9);
+}
+.hljs {
+  background: #000;
+}
     </style>
 
 
@@ -51,7 +67,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
         <section>
-          <h1>is this simple</h1>
+          <h1>is this simple?</h1>
           <h3>distributed systems are complex</h3>
         </section>
 
@@ -117,12 +133,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
         <section>
           <h2>Simple World</h2>
-          <pre>
-              <code class="hljs" data-trim contenteditable>
+          <pre><code class="hljs" data-trim contenteditable>
                 $ node -e "console.log('Hello World');"
                 Hello World
-              </code>
-          </pre>
+          </code></pre>
           <h4>that's simple</h4>
         </section>
 
@@ -134,49 +148,43 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
         <section>
           <h2>Functional Expression</h2>
-          <pre>
-              <code class="hljs" data-trim contenteditable>
+          <pre><code class="hljs" data-trim contenteditable>
                 console.log(
                   Initiator()
                   .map(i =&gt; id2LetterMap(i))
                   .reduce((e, v) =&gt; LetterReducer(e,v))
                   .reduce((e, v) =&gt; ToString(e,v))
                 );
-              </code>
-          </pre>
+              </code></pre>
         </section>
 
         <section>
           <h2>Functional Expression(Initiator)</h2>
-          <pre>
-              <code class="hljs" data-trim contenteditable>
+          <pre><code class="hljs" data-trim contenteditable>
                   function Initiator() {
                     return [0,1,2,3,4,5,6,7,8,9,10,11]
                       .sort(() =&gt; .5 - Math.random());
                   }
-              </code>
-          </pre>
+              </code></pre>
         </section>
 
         <section>
           <h2>Functional Expression(id2LetterMap)</h2>
-          <pre>
-              <code class="hljs" data-trim contenteditable>
+          <pre><code class="hljs" data-trim contenteditable>
                   function id2LetterMap(i) {
                     return { idx: i, letter: "Hello World"[i] };
                   }
-              </code>
-          </pre>
+              </code></pre>
           <h4>real work</h4>
         </section>
 
         <section>
           <h2>Functional LetterReducer</h2>
-          <pre>
-              <code class="hljs" data-trim contenteditable>
+          <pre><code class="hljs" data-trim contenteditable>
 const LetterReducer = function(letterReducers) {
   return function() {
-    for (let letter of Array.from(arguments).filter((i) =&gt; i.letter)) {
+    const args = Array.from(arguments);
+    for (let letter of args.filter((i) =&gt; i.letter)) {
       let ridx = ~~(letter.idx/4), lr = [];
       if (letterReducers.has(ridx)) {
         lr = letterReducers.get(ridx);
@@ -188,18 +196,17 @@ const LetterReducer = function(letterReducers) {
     return [...letterReducers.values()];
   }
 }(new Map());
-              </code>
-          </pre>
+              </code></pre>
           <small>https://en.wikipedia.org/wiki/Monad_(functional_programming)</small>
         </section>
 
         <section>
           <h2>Functional ToStringReducer</h2>
-          <pre>
-              <code class="hljs" data-trim contenteditable>
+          <pre><code class="hljs" data-trim contenteditable>
 const ToString = function(letters) {
   return function() {
-    for (let l of Array.from(arguments).filter((i) =&gt; i[0].letter)) {
+    const args = Array.from(arguments);
+    for (let l of args.filter((i) =&gt; i[0].letter)) {
       letters = letters.concat(l);
     }
     return letters.sort((a,b) =&gt; a.idx - b.idx)
@@ -207,19 +214,16 @@ const ToString = function(letters) {
         .join("")
   }
 }(new Array());
-              </code>
-          </pre>
+              </code></pre>
           <small>letters is state!</small>
         </section>
 
         <section>
           <h2>Functional World</h2>
-          <pre>
-              <code class="hljs" data-trim contenteditable>
+          <pre><code class="hljs" data-trim contenteditable>
                 $ node src/functional.js
                 Hello World
-              </code>
-          </pre>
+              </code></pre>
           <h4>that's simple</h4>
         </section>
 
@@ -237,8 +241,7 @@ const ToString = function(letters) {
           <section>
             <h2>Serverless Initiator</h2>
             <img src="../../initiator.png" height="100px"/>
-            <pre>
-              <code class="hljs" data-trim contenteditable>
+            <pre><code class="hljs" data-trim contenteditable>
 module.exports.helloWorld = function(redisEndPoint) {
     const totalLen = "Hello World".length;
     for (let idx = 0; idx &lt; totalLen; ++idx) {
@@ -250,15 +253,13 @@ module.exports.helloWorld = function(redisEndPoint) {
       }, () =&gt; { /* fire and forget */ });
     }
 }
-              </code>
-            </pre>
+              </code></pre>
           </section>
 
           <section>
             <h2>Serverless id2LetterMap</h2>
             <img src="../../id2LetterMap.png" height="80px"/>
-            <pre>
-              <code class="hljs" data-trim contenteditable>
+            <pre><code class="hljs" data-trim contenteditable>
 module.exports = function(_) {
   return (event, context, callback) =&gt; {
     let transaction = JSON.parse(event.body);
@@ -271,8 +272,7 @@ module.exports = function(_) {
     });
   }
 }
-              </code>
-            </pre>
+              </code></pre>
           </section>
 
           <section>
@@ -304,24 +304,20 @@ module.exports = function(_) {
             <img src="../../letterReducer.png" height="100px" />
             <ul>
               <li>what data we want to put elsewhere:
-                <pre>
-              <code class="hljs" data-trim contenteditable>
+                <pre><code class="hljs" data-trim contenteditable>
                 { transaction: t,
                   segment: s,
                   letters: [ {letter: y1, idx: i1},... ] }
-               </code>
-                </pre>
+               </code></pre>
               </li>
               <li class="fragment">looks like we need a database:
-                <pre>
-              <code class="hljs" data-trim contenteditable>
+                <pre><code class="hljs" data-trim contenteditable>
                create table letterReducer (
                 transaction VARCHAR, segment NUMBER,
                 idx NUMBER, letter CHAR
                 CONSTRAINT lr_pkey PRIMARY
                 KEY(transaction, segment, idx))
-               </code>
-                </pre>
+               </code></pre>
               </li>
             </ul>
           </section>
@@ -358,8 +354,7 @@ module.exports = function(_) {
           </section>
           <section>
             <h2>quick intro to redis</h2>
-            <pre>
-              <code class="hljs" data-trim contenteditable>
+            <pre><code class="hljs" data-trim contenteditable>
 $ telnet redis 10923
 Trying 123.134.15.16...
 Connected to redis
@@ -374,14 +369,12 @@ $4
 val2
 $4
 val1
-</code>
-            </pre>
+</code></pre>
           </section>
 
           <section>
             <h2>Serverless letterReducer</h2>
-            <pre style="width:100%">
-              <code class="hljs" data-trim contenteditable>
+            <pre style="width:100%"><code class="hljs" data-trim contenteditable>
 module.exports = function(redisEndPoint) {
   return (event, context, callback) =&gt; {
     let trans = JSON.parse(event.body);
@@ -405,8 +398,7 @@ module.exports = function(redisEndPoint) {
     });
   }
 }
-              </code>
-            </pre>
+              </code></pre>
             <small>was not too much</small>
           </section>
 
@@ -424,8 +416,7 @@ module.exports = function(redisEndPoint) {
           </section>
           <section>
             <img style="margin: 0;" src="../../toStringReducer.png" height="100px"/>
-            <pre style="margin: 0; width:100%">
-              <code class="hljs" data-trim contenteditable data-noescape>
+            <pre style="margin: 0; width:100%"><code class="hljs" data-trim contenteditable data-noescape>
 module.exports = function(redisEndPoint) {
   return (event, context, callback) =&gt; {
     let transaction = JSON.parse(event.body);
@@ -450,8 +441,7 @@ module.exports = function(redisEndPoint) {
     });
   }
 }
-              </code>
-            </pre>
+              </code></pre>
             <small>where should the result go?</small>
           </section>
 
@@ -476,8 +466,7 @@ module.exports = function(redisEndPoint) {
             <h2>Return the Result w/o Polling</h2>
             <ul>
               <li>helloWorld will register a subscriber on key<br />
-                  <pre style="width: 100%">
-              <code class="hljs" data-trim contenteditable data-noescape>
+                  <pre style="width: 100%"><code class="hljs" data-trim contenteditable data-noescape>
     const my = redisEndPoint();
     const key = `helloWorld-${transaction}`;
     my.on("message", function(channel, jsonMessage) {
@@ -501,8 +490,7 @@ module.exports = function(redisEndPoint) {
             <h2>Publish the Result</h2>
             <ul>
               <li>toStringReducer will publish the result on key<br />
-                  <pre style="width: 100%">
-              <code class="hljs" data-trim contenteditable data-noescape>
+                  <pre style="width: 100%"><code class="hljs" data-trim contenteditable data-noescape>
 module.exports = function(redisEndPoint) {
   return (event, context, callback) =&gt; {
     let transaction = JSON.parse(event.body);
@@ -589,8 +577,7 @@ functions:
       - http:
           path: toStringReducer
           method: post
-                  </code>
-                </pre>
+                  </code></pre>
             </div>
           </section>
 
@@ -660,8 +647,7 @@ functions:
     events:
       - http: path
 
-                  </code>
-                </pre>
+                  </code></pre>
             </div>
           </section>
 
@@ -711,7 +697,7 @@ Reveal.initialize({
   progress: true,
   history: true,
   center: true,
-  transition: 'fade', // none/fade/slide/convex/concave/zoom
+  transition: 'convex', // none/fade/slide/convex/concave/zoom
 
   // Optional reveal.js plugins
   dependencies: [
