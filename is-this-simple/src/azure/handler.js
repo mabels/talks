@@ -2,8 +2,8 @@
 
 const redis = require('redis');
 const dns = require('dns');
-const redisEndPointData = require("../redis.lab");
-const requestLambda = require("../requestLambda");
+const redisEndPointData = require("./redis.lab.js");
+const requestLambda = require("./requestLambda.js");
 const redisEndPoint = function() {
   //console.log("redisEndPoint:", redisEndPointData);
   return redis.createClient(redisEndPointData.port, redisEndPointData.host);
@@ -16,11 +16,11 @@ dns.resolve(redisEndPointData.host, (e,r) =>{
 });
 
 const mods = {
-'env': require('../handler/env'),
-'helloWorld': require('../handler/helloWorld'),
-'toStringReducer': require('../handler/toStringReducer'),
-'id2LetterMap': require('../handler/id2LetterMap'),
-'letterReducer': require('../handler/letterReducer')
+'env': require('./handler/env.js'),
+'helloWorld': require('./handler/helloWorld.js'),
+'toStringReducer': require('./handler/toStringReducer.js'),
+'id2LetterMap': require('./handler/id2LetterMap.js'),
+'letterReducer': require('./handler/letterReducer.js')
 };
 
 for (let mod in mods) {
@@ -29,7 +29,7 @@ for (let mod in mods) {
     redisEndPoint: redisEndPoint,
     requestLambda: requestLambda
   });
-  module.exports[mod] = (context) => {
+  exports[mod] = (context) => {
     let jsonBody = context.req.body
     rmod(jsonBody, {
       lambdaAdr: {

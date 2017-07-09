@@ -23,24 +23,23 @@ provider:
 
 plugins:
   - serverless-azure-functions
-  - serverless-webpack
 
 package:
   exclude:
     - node_modules/**
+    - .serverless/**
     - .gitignore
     - .git/**
-    - ./**
+    - package-lock.json
   include:
-    - ./*.js
-    - ../handler/*js
-    - ../requestLambda.js
-    - ../redis.lab.js
     - node_modules/double-ended-queue/**
     - node_modules/redis/**
     - node_modules/redis-commands/**
     - node_modules/redis-parser/**
     - node_modules/uuid/**
+    - ../handler/*js
+    - ../requestLambda.js
+    - ../redis.lab.js
 
 # you can add packaging information here
 #package:

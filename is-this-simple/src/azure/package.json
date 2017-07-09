@@ -1,5 +1,5 @@
 {
-  "name": "azure-nodejs",
+  "name": "helloworld",
   "version": "1.0.0",
   "description": "Azure Functions sample for the Serverless framework",
   "main": "handler.js",
@@ -8,14 +8,10 @@
     "serverless"
   ],
   "devDependencies": {
-    "serverless-azure-functions": "*",
-    "serverless-webpack": "^2.0.0",
-    "webpack": "^3.1.0",
-    "webpack-node": "0.0.0",
-    "webpack-node-externals": "^1.6.0"
+    "serverless-azure-functions": "*"
   },
   "dependencies": {
-    "uuid": "^2.0.3",
-    "redis": "^2.7.1"
+    "redis": "^2.7.1",
+    "uuid": "^2.0.3"
   }
 }

@@ -17,6 +17,7 @@ plugins:
 package:
   exclude:
     - node_modules/**
+    - package-lock.json
     - .gitignore
     - .git/**
   include:
