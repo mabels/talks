@@ -1,0 +1,99 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: bmix
+
+# Please ensure the serverless-openwhisk provider plugin is installed globally.
+# $ npm install -g serverless-openwhisk
+# ...before installing project dependencies to register this provider.
+# $ npm install
+provider:
+  runtime: nodejs:6
+  name: openwhisk
+  #  ignore_certs: true
+
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.js
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.js
+#    - exclude-me-dir/**
+
+package:
+  exclude:
+    - node_modules/**
+    - package-lock.json
+    - .gitignore
+    - .git/**
+  include:
+    - ../handler/*js
+    - ../requestLambda.js
+    - ../redis.lab.js
+
+functions:
+  env:
+    handler: handler.env
+    memory: 128
+    events:
+      - http: POST /env
+  helloWorld:
+    handler: handler.helloWorld
+    memory: 128
+    events:
+      - http: GET /helloWorld
+  id2LetterMap:
+    handler: handler.id2LetterMap
+    memory: 128
+    events:
+      - http: POST /id2LetterMap
+  letterReducer:
+    handler: handler.letterReducer
+    memory: 128
+    events:
+      - http: POST /letterReducer
+  toStringReducer:
+    handler: handler.toStringReducer
+    memory: 128
+    events:
+      - http: POST /toStringReducer
+#
+#    Functions can be defined using sequences rather than referring 
+#    to a handler.
+#    sequence:
+#      - parse_input
+#      - do_some_algorithm
+#      - construct_output
+#    The following are a few example events you can configure
+#    Check the event documentation for details
+
+
+# extend the framework using plugins listed here:
+# https://github.com/serverless/plugins
+plugins:
+  - serverless-openwhisk
+
+# you can define custom triggers and trigger feeds using the resources section.
+#
+#resources:
+#  triggers:
+#    my_trigger:
+#      parameters: 
+#        hello: world    
+#    alarm_trigger:
+#      parameters: 
+#        hello: world
+#     feed: /whisk.system/alarms/alarm
+#     feed_parameters: 
+#       cron: '*/8 * * * * *'

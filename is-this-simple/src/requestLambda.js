@@ -1,10 +1,11 @@
 const https = require('https');
 
 module.exports = (action, attr, transaction, cb) => {
+  const pb = attr.lambdaAdr.pathBuilder ? attr.lambdaAdr.pathBuilder : (a) => a;
   const options = {
     host: attr.lambdaAdr.host,
     port: attr.lambdaAdr.port,
-    path: `${attr.lambdaAdr.basePath}${action}`,
+    path: `${attr.lambdaAdr.basePath}${pb(action)}`,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -20,4 +21,5 @@ module.exports = (action, attr, transaction, cb) => {
   req.on('error', function(err) { cb(err) });
   req.write(JSON.stringify(transaction), 'utf8');
   req.end();
+  return options;
 }
